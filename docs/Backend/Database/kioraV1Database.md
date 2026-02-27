@@ -99,6 +99,15 @@ Se cuenta con un Trigger `on_auth_user_created` que ejecuta la función `handle_
 - **Mecanismo**: al registrar un usuario, la BD inserta automáticamente su información en la tabla `profiles`.
 - **Beneficio**: garantiza que nunca se tendrá una tarea o etiqueta sin un perfil asociado. Cuando el usuario se registra en la app (ej. React), la DB se prepara sola.
 
+> [!NOTE]  
+> **Creando Usuarios de Prueba (Desarrollo):**
+> Si vas a crear usuarios de prueba directamente desde el **Dashboard de Supabase** para usar la API, por defecto Supabase pedirá que verifiquen su correo. Para que puedan hacer consultas API sin problemas:
+> 1. Desactiva la opción **"Confirm email"** en Supabase: `Authentication -> Providers -> Email`.
+> 2. Opcionalmente, puedes confirmar el usuario recién creado ejecutando este comando de SQL en el **SQL Editor** del dashboard de Supabase (reemplaza por el correo que creaste):
+>    ```sql
+>    UPDATE auth.users SET email_confirmed_at = NOW() WHERE email = 'test@example.com';
+>    ```
+
 ---
 
 **Seguridad: Row Level Security (RLS) y Políticas**

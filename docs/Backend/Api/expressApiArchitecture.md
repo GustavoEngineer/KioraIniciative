@@ -57,6 +57,13 @@ Funciones de ayuda y utilidades compartidas.
 |-----------------|---------|
 | `.js` | Funciones puras y helpers reutilizables. Ej: `dateFormatter.js`, `passwordEncryption.js`, `validators.js` |
 
+### `scripts/`
+Scripts de utilidad y herramientas de desarrollo fuera de la lógica principal.
+
+| Tipo de Archivo | Función |
+|-----------------|---------|
+| `.js` | Herramientas para desarrolladores (ej. obtención de tokens JWT de prueba, prellenado de base de datos). Ej: `auth-helper.js` |
+
 ### `src/`
 Archivos principales de la aplicación.
 
@@ -70,8 +77,12 @@ Archivos principales de la aplicación.
 ## Árbol Completo
 
 ```text
-src/
-├── config/
+/ (Raíz del proyecto)
+├── scripts/
+│   └── auth-helper.js
+│
+├── src/
+│   ├── config/
 │   ├── database.js
 │   └── env.js
 │
