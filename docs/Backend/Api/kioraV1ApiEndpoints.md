@@ -8,7 +8,19 @@ Esta documentación describe todos los endpoints disponibles en la API de Kiora.
 
 ---
 
-## 1. Recurso: Tags (Etiquetas)
+## 1. Recurso: Profiles (Perfiles)
+
+Este recurso gestiona la información pública y privada del usuario. Gracias a la automatización de la base de datos, cada usuario registrado tiene un perfil garantizado.
+
+### Endpoints
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| **GET** | `/api/profiles/me` | Obtiene la información del perfil del usuario autenticado de forma segura. |
+
+---
+
+## 2. Recurso: Tags (Etiquetas)
 
 Las etiquetas son el nivel más alto de categorización. Permiten agrupar tareas por temas o contextos.
 
@@ -23,7 +35,7 @@ Las etiquetas son el nivel más alto de categorización. Permiten agrupar tareas
 
 ---
 
-## 2. Recurso: Tasks (Tareas)
+## 3. Recurso: Tasks (Tareas)
 
 Este es el core de la aplicación. Aquí se manejan la prioridad (1-10) y la relación con las etiquetas.
 
@@ -39,7 +51,7 @@ Este es el core de la aplicación. Aquí se manejan la prioridad (1-10) y la rel
 
 ---
 
-## 3. Recurso: Subtasks (Subtareas)
+## 4. Recurso: Subtasks (Subtareas)
 
 Aunque dependen de una tarea padre, requieren sus propios endpoints para acciones rápidas en la UI.
 
@@ -53,7 +65,7 @@ Aunque dependen de una tarea padre, requieren sus propios endpoints para accione
 
 ---
 
-## 4. Endpoint Especial: Dashboard
+## 5. Endpoint Especial: Dashboard
 
 Para mejorar la experiencia de usuario (UX) en React, se propone un endpoint maestro:
 
@@ -120,7 +132,7 @@ Authorization: Bearer <token>
 
 ---
 
-## 5. Consideraciones Técnicas
+## 6. Consideraciones Técnicas
 
 ### Autenticación y Autorización
 
@@ -159,7 +171,7 @@ Implementar rate limiting para proteger la API de abuso:
 
 ---
 
-## 6. Estructura de Errores
+## 7. Estructura de Errores
 
 Todos los errores devuelven un objeto JSON estándar:
 

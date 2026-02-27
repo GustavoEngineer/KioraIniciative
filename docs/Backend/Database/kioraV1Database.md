@@ -4,8 +4,9 @@ Esta documentación describe las tablas, atributos y configuraciones definidas e
 
 **Resumen:**
 - **Extensión:** `uuid-ossp` para generación de UUIDs.
-- Tablas principales: `tags`, `tasks`, `subtasks`.
-- Seguridad: Row Level Security (RLS) habilitada y políticas por usuario.
+- Tablas principales: `profiles`, `tags`, `tasks`, `subtasks`.
+- Seguridad: Row Level Security (RLS) habilitada y privacidad total por usuario.
+- Automatización: Trigger para crear automáticamente el registro en `profiles`.
 - Índices sugeridos para optimización de consultas.
 
 ---
@@ -16,6 +17,23 @@ Esta documentación describe las tablas, atributos y configuraciones definidas e
 
 ---
 
+**Tabla `profiles`**
+
+Descripción: almacena el perfil del usuario, sincronizado automáticamente desde `auth.users`. Resuelve la integridad referencial de forma limpia para PostgreSQL.
+
+Columnas:
+
+- **`id`**: UUID, `PRIMARY KEY`, `REFERENCES auth.users(id) ON DELETE CASCADE` — identificador del usuario (mismo que en auth).
+- **`full_name`**: `TEXT` — nombre completo del usuario.
+- **`username`**: `TEXT UNIQUE` — nombre de usuario elegible (único).
+- **`updated_at`**: `TIMESTAMPTZ DEFAULT NOW()` — marca de tiempo de última actualización.
+
+Restricciones y notas:
+
+- En el frontend permite hacer un `SELECT * FROM profiles WHERE id = auth.uid()` para mostrar el nombre y la foto del usuario en el Dashboard sin complicaciones de auth metadata.
+
+---
+
 **Tabla `tags`**
 
 Descripción: almacena etiquetas creadas por usuarios para categorizar tareas.
@@ -23,7 +41,7 @@ Descripción: almacena etiquetas creadas por usuarios para categorizar tareas.
 Columnas:
 
 - **`id`**: UUID, `PRIMARY KEY`, `DEFAULT uuid_generate_v4()` — identificador único de la etiqueta.
-- **`user_id`**: UUID, `NOT NULL`, `REFERENCES auth.users(id) ON DELETE CASCADE` — referencia al propietario (usuario) de la etiqueta; en cascada al borrar el usuario.
+- **`user_id`**: UUID, `NOT NULL`, `REFERENCES profiles(id) ON DELETE CASCADE` — referencia al perfil del propietario de la etiqueta; en cascada al borrar el perfil.
 - **`name`**: `VARCHAR(50) NOT NULL` — nombre de la etiqueta (máx. 50 caracteres).
 - **`created_at`**: `TIMESTAMPTZ DEFAULT NOW()` — marca de tiempo de creación.
 
@@ -41,7 +59,7 @@ Descripción: lista de tareas del usuario; puede estar relacionada opcionalmente
 Columnas:
 
 - **`id`**: UUID, `PRIMARY KEY`, `DEFAULT uuid_generate_v4()` — identificador único de la tarea.
-- **`user_id`**: UUID, `NOT NULL`, `REFERENCES auth.users(id) ON DELETE CASCADE` — propietario de la tarea.
+- **`user_id`**: UUID, `NOT NULL`, `REFERENCES profiles(id) ON DELETE CASCADE` — referencia al perfil propietario de la tarea.
 - **`tag_id`**: UUID, `REFERENCES tags(id) ON DELETE SET NULL` — etiqueta asociada (opcional). Si la etiqueta se borra, se pone `NULL`.
 - **`title`**: `TEXT NOT NULL CHECK (char_length(title) > 0)` — título de la tarea; check garantiza no string vacío.
 - **`description`**: `TEXT` — descripción libre de la tarea.
@@ -75,13 +93,22 @@ Restricciones y notas:
 
 ---
 
+**Automatización (Trigger)**
+
+Se cuenta con un Trigger `on_auth_user_created` que ejecuta la función `handle_new_user()` al insertar un nuevo usuario en `auth.users`.
+- **Mecanismo**: al registrar un usuario, la BD inserta automáticamente su información en la tabla `profiles`.
+- **Beneficio**: garantiza que nunca se tendrá una tarea o etiqueta sin un perfil asociado. Cuando el usuario se registra en la app (ej. React), la DB se prepara sola.
+
+---
+
 **Seguridad: Row Level Security (RLS) y Políticas**
 
-- Se habilita RLS en las tres tablas: `tags`, `tasks`, `subtasks`.
+- Se habilita RLS en cuatro tablas: `profiles`, `tags`, `tasks`, `subtasks`.
 - Políticas definidas:
-  - `Users can only access their own tags` ON `tags` FOR ALL USING `(auth.uid() = user_id)` — limita acceso a etiquetas por propietario.
-  - `Users can only access their own tasks` ON `tasks` FOR ALL USING `(auth.uid() = user_id)` — limita acceso a tareas por propietario.
-  - `Users can access subtasks of their own tasks` ON `subtasks` FOR ALL USING (existe verificación que el `task_id` pertenece a una task con `user_id = auth.uid()`) — acceso a subtareas validando propiedad de la tarea padre.
+  - `"Profile access"` ON `profiles` FOR ALL USING `(auth.uid() = id)` — un usuario solo puede acceder a su propio perfil (no hay permisos de lectura pública).
+  - `"Tags access"` ON `tags` FOR ALL USING `(auth.uid() = user_id)` — limita acceso a etiquetas por propietario.
+  - `"Tasks access"` ON `tasks` FOR ALL USING `(auth.uid() = user_id)` — limita acceso a tareas por propietario.
+  - `"Subtasks access"` ON `subtasks` FOR ALL USING (existe verificación que el `task_id` pertenece a una task con `user_id = auth.uid()`) — acceso a subtareas validando propiedad de la tarea padre.
 
 Notas de implementación:
 

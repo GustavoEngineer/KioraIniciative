@@ -1,20 +1,26 @@
--- 1. Extensiones iniciales
+-- 1. Extensiones
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- 2. Tabla de Etiquetas (Tags)
--- Se eliminó el campo color por requerimiento.
+-- 2. Tabla de Perfiles
+CREATE TABLE profiles (
+    id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    full_name TEXT,
+    username TEXT UNIQUE,
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 3. Tabla de Etiquetas
 CREATE TABLE tags (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
     name VARCHAR(50) NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 3. Tabla de Tareas (Tasks)
--- Prioridad ajustada de 1 a 10 con un CHECK constraint.
+-- 4. Tabla de Tareas
 CREATE TABLE tasks (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
     tag_id UUID REFERENCES tags(id) ON DELETE SET NULL,
     title TEXT NOT NULL CHECK (char_length(title) > 0),
     description TEXT,
@@ -23,8 +29,7 @@ CREATE TABLE tasks (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 4. Tabla de Subtareas (Subtasks)
--- Estructura independiente con relación directa a la tarea padre.
+-- 5. Tabla de Subtareas
 CREATE TABLE subtasks (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     task_id UUID NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
@@ -33,28 +38,35 @@ CREATE TABLE subtasks (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 5. Seguridad: Row Level Security (RLS)
+-- 6. Automatización (Trigger)
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS trigger AS $$
+BEGIN
+  INSERT INTO public.profiles (id, full_name)
+  VALUES (new.id, new.raw_user_meta_data->>'full_name');
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
+
+-- 7. Row Level Security (RLS)
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tags ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE subtasks ENABLE ROW LEVEL SECURITY;
 
--- 6. Políticas de Acceso (Basadas en el usuario autenticado)
-CREATE POLICY "Users can only access their own tags" ON tags
-    FOR ALL USING (auth.uid() = user_id);
+-- Políticas
+CREATE POLICY "Profile access" ON profiles FOR ALL USING (auth.uid() = id);
+CREATE POLICY "Tags access" ON tags FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Tasks access" ON tasks FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Subtasks access" ON subtasks FOR ALL USING (
+    EXISTS (SELECT 1 FROM tasks WHERE tasks.id = subtasks.task_id AND tasks.user_id = auth.uid())
+);
 
-CREATE POLICY "Users can only access their own tasks" ON tasks
-    FOR ALL USING (auth.uid() = user_id);
-
--- Para subtasks, el acceso se hereda validando que el usuario sea dueño de la tarea padre
-CREATE POLICY "Users can access subtasks of their own tasks" ON subtasks
-    FOR ALL USING (
-        EXISTS (
-            SELECT 1 FROM tasks 
-            WHERE tasks.id = subtasks.task_id 
-            AND tasks.user_id = auth.uid()
-        )
-    );
-
--- 7. Índices sugeridos para optimizar rendimiento de filtrado
+-- 8. Índices
 CREATE INDEX idx_tasks_user_id ON tasks(user_id);
 CREATE INDEX idx_subtasks_task_id ON subtasks(task_id);
+CREATE INDEX idx_tags_user_id ON tags(user_id);
