@@ -1,0 +1,56 @@
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0.5rem 1rem;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+    position: relative;
+    /* Necesario para el pseudo-elemento ::after */
+}
+
+/* Pseudo-elemento para la línea animada debajo del botón */
+.button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    /* Empieza un poco metido */
+    width: 80%;
+    /* No abarca el 100% desde el inicio para poder expandirse */
+    height: 1.5px;
+    background-color: white;
+    transform: scaleX(0);
+    /* Invisible por defecto */
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: center;
+}
+
+/* Al hacer hover, la línea se dibuja */
+.button:hover::after {
+    transform: scaleX(1);
+}
+
+.button:hover {
+    color: rgba(255, 255, 255, 0.7);
+    transform: translateY(-2px);
+}
+
+.button:active {
+    transform: translateY(1px);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Variantes vaciadas temporalmente para modo texto + icono simple */
+.icon {
+    font-size: 1.8rem;
+    /* Aumentado desde 1.4rem */
+}

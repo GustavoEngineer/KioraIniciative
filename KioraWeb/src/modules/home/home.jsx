@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Typography } from '../../common/components/typography';
-import styles from './FirstView.module.css';
+import styles from './home.module.css';
 
-const FirstView = () => {
-    const navigate = useNavigate();
+const Home = ({ onStart }) => {
     const [isExiting, setIsExiting] = useState(false);
 
     const handleStart = () => {
         setIsExiting(true);
         // Espera a que termine la animación css (200ms) antes de saltar de página
         setTimeout(() => {
-            navigate('/auth');
+            if (onStart) onStart();
         }, 200);
     };
 
@@ -41,4 +39,4 @@ const FirstView = () => {
     );
 };
 
-export default FirstView;
+export default Home;

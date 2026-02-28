@@ -25,6 +25,21 @@
   flex-direction: column;
   align-items: flex-start;
   /* Todo alineado a la izquierda */
+
+  /* Animación de entrada inicial desde la izquierda */
+  opacity: 0;
+  transform: translate(-50px, -50%);
+  /* Empieza a la izquierda y centrado verticalmente */
+  animation: slideInFromLeft 0.8s cubic-bezier(0.16, 1, 0.2, 1) forwards;
+  animation-delay: 0.1s;
+  /* 0.3s de espera al cargar el componente */
+}
+
+@keyframes slideInFromLeft {
+  to {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
 }
 
 .title {
@@ -72,6 +87,20 @@
   justify-content: center;
   z-index: 2;
   color: rgba(255, 255, 255, 0.7);
+
+  /* Animación de entrada inicial desde la izquierda */
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: slideInFromLeftBottom 0.8s cubic-bezier(0.16, 1, 0.2, 1) forwards;
+  animation-delay: 0.5s;
+  /* Entra un poco después del Hero Section */
+}
+
+@keyframes slideInFromLeftBottom {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .categoriesText {

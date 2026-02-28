@@ -1,0 +1,62 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 450px;
+    /* Aparece con animación tras la subida del panel */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUpForm 0.6s ease-out forwards;
+    animation-delay: 0.8s;
+    /* Espera a que el panel suba */
+}
+
+@keyframes fadeUpForm {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.formContainer.exitDown {
+    animation: formSlideDownOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes formSlideDownOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+}
+
+.formContainer.exitRegisterMode {
+    /* Animación para subir y desaparecer junto con la expansión del panel */
+    animation: slideUpAndFadeOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    position: absolute;
+    /* Para que el nuevo form pueda ocupar su lugar */
+}
+
+@keyframes slideUpAndFadeOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    40% {
+        /* Se mantiene visible mientras sube el contenedor */
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        /* Sube un poco más y se desvanece rápido */
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+}

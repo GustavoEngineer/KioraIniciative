@@ -1,0 +1,236 @@
+.verticalLine {
+    position: absolute;
+    top: 0;
+    /* Ocupa toda la pantalla verticalmente */
+    bottom: 0;
+    left: 4rem;
+    /* Mantiene la separación del lado izquierdo */
+    width: 1px;
+    /* Línea más delgada */
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Mucho más transparente */
+    z-index: 5;
+
+    /* Animación para que aparezca creciendo desde arriba hacia abajo */
+    transform: scaleY(0);
+    transform-origin: top;
+    animation: growLine 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.verticalLineRight {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 4rem;
+    /* Posición en el borde derecho */
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: 5;
+
+    /* Misma animación que la de la izquierda */
+    transform: scaleY(0);
+    transform-origin: top;
+    animation: growLine 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.horizontalLineTop {
+    position: absolute;
+    top: 4rem;
+    /* Separación desde arriba */
+    left: 0;
+    right: 0;
+    /* Abarca toda la pantalla horizontalmente */
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: 5;
+
+    /* Animación para que aparezca creciendo de izquierda a derecha */
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: growLineHorizontal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes growLine {
+    to {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes growLineHorizontal {
+    to {
+        transform: scaleX(1);
+    }
+}
+
+.verticalLine.exitUp,
+.verticalLineRight.exitUp {
+    animation: slideUpOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.horizontalLineTop.exitLeft {
+    animation: slideLeftOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideUpOut {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100vh);
+    }
+}
+
+@keyframes slideLeftOut {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100vw);
+    }
+}
+
+.authBackground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35%;
+
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    -webkit-mask-image: linear-gradient(to top, black 60%, transparent 100%);
+    mask-image: linear-gradient(to top, black 60%, transparent 100%);
+
+    transform: translateY(100%);
+    opacity: 0;
+    animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 1;
+}
+
+.authContentContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 32%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    color: white;
+    padding-top: 3rem;
+    padding-left: 8rem;
+
+    transform: translateY(100%);
+    opacity: 0;
+    animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 2;
+}
+
+.authBackground.exitDownBg,
+.authContentContainer.exitDownBg {
+    animation: authPanelSlideDownOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes authPanelSlideDownOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+.authBackground.expandUpBg.exitDownBg {
+    animation: authPanelSlideDownFromRegister 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+@keyframes authPanelSlideDownFromRegister {
+    from {
+        transform: translateY(0);
+        height: 70%;
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(100vh);
+        height: 70%;
+        opacity: 0;
+    }
+}
+
+.authBackground.expandUpBg {
+    animation: authPanelExpandUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes authPanelExpandUp {
+    from {
+        height: 35%;
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        height: 70%;
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.authContentContainer.moveUpForm {
+    animation: formExpandUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes formExpandUp {
+    from {
+        height: 32%;
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        height: 50%;
+        /* Sube alineado con el texto y panel nuevo */
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.authContentContainer.moveUpForm.exitDownBg {
+    animation: formSlideDownFromRegister 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+@keyframes formSlideDownFromRegister {
+    from {
+        transform: translateY(0);
+        height: 50%;
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(100vh);
+        height: 50%;
+        opacity: 0;
+    }
+}
+
+/* Keyframes para la transición de subida y desvanecimiento */
+@keyframes slideUpFade {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

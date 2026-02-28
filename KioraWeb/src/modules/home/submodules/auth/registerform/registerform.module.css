@@ -1,0 +1,23 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 450px;
+
+    /* Animación de entrada: Oculto inicialmente, aparece deslizando hacia arriba */
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeUpRegisterForm 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    /* Entra justo después de que el LoginForm se desvanece hacia arriba.
+       La expansión del panel dura 0.6s. El login form tarda 0.6s. 
+       Esperamos 0.4s para que empiece a entrar. */
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeUpRegisterForm {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

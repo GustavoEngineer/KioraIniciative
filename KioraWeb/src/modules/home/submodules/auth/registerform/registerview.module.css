@@ -1,0 +1,88 @@
+/* ======== TEXTO HERO EN REGISTERVIEW ======== */
+.heroTextContainer {
+    position: absolute;
+    bottom: 35%;
+    /* Totalmente pegado al panel glassmorphism */
+    left: 8rem;
+    /* Un poco más adentro que las líneas laterales */
+    right: 8rem;
+    z-index: 5;
+    color: white;
+
+    /* Animación de aparición suave */
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeUpText 0.8s ease-out forwards;
+    animation-delay: 0.3s;
+    /* Entra un poquito después que las líneas */
+}
+
+.heroTextContainer.moveUpHero {
+    animation: moveUpText 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes moveUpText {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-20vh);
+        /* Subirlo un poco */
+        opacity: 1;
+    }
+}
+
+.mainTitle {
+    font-size: 4.5rem;
+    /* Título grande */
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.subTitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    opacity: 0.8;
+    max-width: 900px;
+}
+
+@keyframes fadeUpText {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.heroTextContainer.exitDownHero {
+    animation: heroSlideDownOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes heroSlideDownOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+.heroTextContainer.moveUpHero.exitDownHero {
+    animation: heroSlideDownFromRegister 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+@keyframes heroSlideDownFromRegister {
+    from {
+        transform: translateY(-20vh);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
