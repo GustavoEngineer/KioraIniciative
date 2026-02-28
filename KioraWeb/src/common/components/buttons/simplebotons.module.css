@@ -54,3 +54,31 @@
     font-size: 1.8rem;
     /* Aumentado desde 1.4rem */
 }
+
+/* ======== VARIANTE CLASSIC ======== */
+.classic {
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    /* O el border-radius que prefieras */
+    padding: 0.8rem 1.5rem;
+    font-weight: 500;
+}
+
+.classic::after {
+    display: none;
+    /* Quitamos la línea inferior animada */
+}
+
+.classic:hover {
+    background-color: #f0f0f0;
+    /* Un gris muy claro al pasar el ratón */
+    color: black;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.classic:active {
+    transform: translateY(1px);
+    background-color: #e0e0e0;
+}

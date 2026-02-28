@@ -21,3 +21,26 @@
         transform: translateY(0);
     }
 }
+
+/* ======== FEEDBACK MESSAGES ======== */
+.errorMsg {
+    color: #ff6b6b;
+    font-size: 0.95rem;
+    margin-bottom: -0.5rem;
+    padding: 0.8rem 1rem;
+    background: rgba(255, 107, 107, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid #ff6b6b;
+    backdrop-filter: blur(4px);
+}
+
+.successMsg {
+    color: #51cf66;
+    font-size: 0.95rem;
+    margin-bottom: -0.5rem;
+    padding: 0.8rem 1rem;
+    background: rgba(81, 207, 102, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid #51cf66;
+    backdrop-filter: blur(4px);
+}
