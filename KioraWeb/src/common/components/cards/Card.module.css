@@ -1,0 +1,28 @@
+.card {
+    position: relative;
+    background: #1e1e1e;
+    border: 1px solid rgba(255, 255, 255, 0.17);
+    border-radius: 10px;
+    /* Resetting to original or standard? Actually user didn't ask to change radius, but I'll stick to removal of min-height */
+    padding: 1.5rem;
+    color: white;
+    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.card.hovered {
+    transform: translateY(-5px);
+    background: #2a2a2a;
+    border-color: rgba(255, 255, 255, 0.388);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
 import { isValidEmail } from '../../../../../common/utils/validations';
 
@@ -6,6 +7,7 @@ import { isValidEmail } from '../../../../../common/utils/validations';
  * Hook to manage login form state and logic
  */
 export const useLogin = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -56,8 +58,7 @@ export const useLogin = () => {
                 setError(loginError.message);
             }
         } else {
-            window.alert(`¡Bienvenido de nuevo, ${data.user.email}!`);
-            // Aquí podrías redirigir al dashboard o actualizar el estado global de auth
+            navigate('/dashboard');
         }
     };
 

@@ -19,6 +19,8 @@ const LoginForm = ({ isExiting, isRegisteringMode }) => {
                 icon="solar:letter-outline"
                 value={formData.email}
                 onChange={handleChange}
+                onFocus={(e) => e.target.removeAttribute('readonly')}
+                readOnly
             />
             <Input
                 type="password"
@@ -27,6 +29,8 @@ const LoginForm = ({ isExiting, isRegisteringMode }) => {
                 icon="solar:lock-outline"
                 value={formData.password}
                 onChange={handleChange}
+                onFocus={(e) => e.target.removeAttribute('readonly')}
+                readOnly
             />
             <SimpleButton
                 text={loading ? "Verificando..." : "Iniciar sesión"}

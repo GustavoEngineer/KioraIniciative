@@ -18,6 +18,8 @@ const RegisterForm = () => {
                 icon="solar:user-outline"
                 value={formData.fullName}
                 onChange={handleChange}
+                onFocus={(e) => e.target.removeAttribute('readonly')}
+                readOnly
             />
             <Input
                 type="email"
@@ -26,6 +28,8 @@ const RegisterForm = () => {
                 icon="solar:letter-outline"
                 value={formData.email}
                 onChange={handleChange}
+                onFocus={(e) => e.target.removeAttribute('readonly')}
+                readOnly
             />
             <Input
                 type="password"
@@ -34,6 +38,8 @@ const RegisterForm = () => {
                 icon="solar:lock-outline"
                 value={formData.password}
                 onChange={handleChange}
+                onFocus={(e) => e.target.removeAttribute('readonly')}
+                readOnly
             />
             <Input
                 type="password"
@@ -42,6 +48,8 @@ const RegisterForm = () => {
                 icon="solar:lock-outline"
                 value={formData.confirmPassword}
                 onChange={handleChange}
+                onFocus={(e) => e.target.removeAttribute('readonly')}
+                readOnly
             />
             <SimpleButton
                 type="submit"
