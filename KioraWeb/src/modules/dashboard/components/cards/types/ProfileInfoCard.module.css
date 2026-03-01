@@ -1,5 +1,6 @@
 .profileInfoCard {
     height: 100%;
+    border-top-right-radius: 25px !important;
 }
 
 .content {

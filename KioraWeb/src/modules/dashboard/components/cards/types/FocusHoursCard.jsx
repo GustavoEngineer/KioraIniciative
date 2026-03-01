@@ -5,7 +5,7 @@ import styles from './FocusHoursCard.module.css';
 
 const FocusHoursCard = () => {
     return (
-        <Card title="Enfoque de hoy">
+        <Card title="Enfoque de hoy" className={styles.focusHoursCard}>
             <div className={styles.content}>
                 <div className={styles.valueContainer}>
                     <Typography variant="h2" className={styles.value}>

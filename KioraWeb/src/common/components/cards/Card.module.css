@@ -2,7 +2,6 @@
     position: relative;
     background: #1e1e1e;
     border: 1px solid rgba(255, 255, 255, 0.17);
-    border-radius: 10px;
     /* Resetting to original or standard? Actually user didn't ask to change radius, but I'll stick to removal of min-height */
     padding: 1.5rem;
     color: white;
