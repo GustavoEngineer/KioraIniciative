@@ -7,16 +7,9 @@ import styles from './DashboardView.module.css';
 
 const DashboardView = () => {
     return (
-        <Routes>
-            <Route path="cover" element={<Cover />} />
-            <Route path="cards" element={
-                <DashboardBackground>
-                    <CardsContainer />
-                </DashboardBackground>
-            } />
-            {/* Redirigir por defecto a cover si entramos a /dashboard */}
-            <Route path="/" element={<Navigate to="cover" replace />} />
-        </Routes>
+        <DashboardBackground>
+            <CardsContainer />
+        </DashboardBackground>
     );
 };
 

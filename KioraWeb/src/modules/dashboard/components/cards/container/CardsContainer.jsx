@@ -1,26 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './CardsContainer.module.css';
+import WelcomeCard from '../../../submodules/cover/WelcomeCard';
 import FocusHoursCard from '../types/FocusHoursCard';
 import CompletedTasksCard from '../types/CompletedTasksCard';
-import DateCard from '../types/DateCard';
-import SharedTasksCard from '../types/SharedTasksCard';
 import TasksCard from '../types/TasksCard';
-import TimelineCard from '../types/TimelineCard';
-import ProfileInfoCard from '../types/ProfileInfoCard';
 
-const CardsContainer = ({ children }) => {
+const CardsContainer = () => {
+    const [showDashboard, setShowDashboard] = useState(false);
+
+    const handleWelcomeComplete = () => {
+        setShowDashboard(true);
+    };
+
     return (
-        <div className={styles.container}>
-            {children || (
-                <>
-                    <ProfileInfoCard />
+        <div className={`${styles.container} ${showDashboard ? styles.dashboardActive : ''}`}>
+            {/* El WelcomeCard siempre está presente */}
+            <WelcomeCard onAnimationComplete={handleWelcomeComplete} />
+
+            {/* El resto de las tarjetas SOLO se renderizan tras la animación */}
+            {showDashboard && (
+                <div className={`${styles.cardsGrid} ${styles.visible}`}>
                     <FocusHoursCard />
                     <CompletedTasksCard />
-                    <DateCard />
-                    <SharedTasksCard />
                     <TasksCard />
-                    <TimelineCard />
-                </>
+                </div>
             )}
         </div>
     );
@@ -30,9 +33,5 @@ export default CardsContainer;
 export {
     FocusHoursCard,
     CompletedTasksCard,
-    DateCard,
-    SharedTasksCard,
-    TasksCard,
-    TimelineCard,
-    ProfileInfoCard
+    TasksCard
 };

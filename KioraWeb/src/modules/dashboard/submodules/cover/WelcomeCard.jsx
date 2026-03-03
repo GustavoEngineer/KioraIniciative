@@ -6,7 +6,7 @@ import { Typography } from '../../../../common/components/typography';
 import DateMiniCard from './dateminicard';
 import styles from './WelcomeCard.module.css';
 
-const WelcomeCard = () => {
+const WelcomeCard = ({ onAnimationComplete }) => {
     const navigate = useNavigate();
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -44,6 +44,12 @@ const WelcomeCard = () => {
 
     const handleStart = () => {
         setIsFading(true);
+        // Notificar al contenedor cuando la animación termine (aprox 1.1s)
+        if (onAnimationComplete) {
+            setTimeout(() => {
+                onAnimationComplete();
+            }, 1100);
+        }
     };
 
     return (

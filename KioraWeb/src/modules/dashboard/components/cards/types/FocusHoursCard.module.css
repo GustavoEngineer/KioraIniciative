@@ -1,5 +1,7 @@
 .focusHoursCard {
     border-top-left-radius: 25px !important;
+    max-width: 400px;
+    height: 55vh !important;
 }
 
 .content {
@@ -19,7 +21,7 @@
 
 .value {
     color: white;
-    font-size: 10rem;
+    font-size: 8rem;
     font-weight: 700;
     line-height: 1;
 }
