@@ -58,7 +58,7 @@ export const useLogin = () => {
                 setError(loginError.message);
             }
         } else {
-            navigate('/dashboard');
+            navigate('/dashboard/cover');
         }
     };
 

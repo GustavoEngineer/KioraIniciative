@@ -1,0 +1,151 @@
+.cardContainer {
+    width: 600px;
+    height: 600px;
+    background-color: transparent;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+    padding: 4rem;
+    overflow: hidden;
+    text-align: left;
+    /* Stage 2 Transitions (delayed by 0.5s stage 1) */
+    transition:
+        width 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s,
+        height 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s,
+        background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s,
+        border-radius 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s,
+        backdrop-filter 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s,
+        -webkit-backdrop-filter 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s,
+        box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s,
+        padding 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+}
+
+/* Pseudo-elemento para el gradiente oscuro (permite fade suave) */
+.cardContainer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 30%, rgba(255, 255, 255, 0) 100%);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+    z-index: 0;
+}
+
+.cardContainer>* {
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.5s ease-in-out 0s;
+}
+
+.cardFaded {
+    width: 120px !important;
+    height: 120px !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background-color: #007bff !important;
+    backdrop-filter: blur(0px) !important;
+    -webkit-backdrop-filter: blur(0px) !important;
+    box-shadow: none !important;
+}
+
+.cardFaded::before {
+    opacity: 0 !important;
+}
+
+.cardFaded>* {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+.contentContainer {
+    max-width: 100%;
+    z-index: 1;
+    transform: translateY(40px);
+}
+
+.owlIcon {
+    position: absolute;
+    bottom: 2rem;
+    right: 6rem;
+    width: 64px;
+    height: 64px;
+    color: rgba(255, 255, 255, 0.4);
+    /* Owl moves during Stage 2 */
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+    z-index: 10;
+}
+
+.owlCentered {
+    bottom: 50% !important;
+    right: 50% !important;
+    transform: translate(50%, 50%) scale(1.2) !important;
+    opacity: 1 !important;
+    color: white !important;
+}
+
+.mainTitle {
+    color: white !important;
+    font-size: 3rem !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+}
+
+.userName {
+    font-weight: 700;
+    color: #94c8ff;
+}
+
+.welcomeButton {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    z-index: 2;
+}
+
+.welcomeButton:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.calendarPosition {
+    position: absolute;
+    top: 2.5rem;
+    left: 2.5rem;
+}
+
+.exitButton {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.exitButton:hover {
+    color: white;
+    transform: scale(1.1);
+}
