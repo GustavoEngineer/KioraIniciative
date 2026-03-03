@@ -1,6 +1,9 @@
 .timelineCard {
-    height: 100%;
+    width: calc(100% + 120px + 0.5rem);
+    height: calc(50vh - 60px - 1.2rem);
+    max-height: calc(50vh - 60px - 1.2rem);
     border-bottom-right-radius: 25px !important;
+    margin-left: calc(-120px - 0.5rem);
 }
 
 .content {

@@ -1,6 +1,7 @@
 .dateCard {
-    height: 100%;
-    max-width: 470px;
+    width: calc(50vw - 340px - 1.5rem);
+    height: calc(50vh - 60px - 1.5rem);
+    max-height: calc(50vh - 60px - 1.5rem);
 }
 
 .content {

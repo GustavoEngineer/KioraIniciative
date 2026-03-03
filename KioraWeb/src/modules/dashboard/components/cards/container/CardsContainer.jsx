@@ -4,6 +4,8 @@ import WelcomeCard from '../../../submodules/cover/WelcomeCard';
 import FocusHoursCard from '../types/FocusHoursCard';
 import CompletedTasksCard from '../types/CompletedTasksCard';
 import TasksCard from '../types/TasksCard';
+import DateCard from '../types/DateCard';
+import TimelineCard from '../types/TimelineCard';
 
 const CardsContainer = () => {
     const [showDashboard, setShowDashboard] = useState(false);
@@ -23,6 +25,8 @@ const CardsContainer = () => {
                     <FocusHoursCard />
                     <CompletedTasksCard />
                     <TasksCard />
+                    <DateCard />
+                    <TimelineCard />
                 </div>
             )}
         </div>
@@ -33,5 +37,7 @@ export default CardsContainer;
 export {
     FocusHoursCard,
     CompletedTasksCard,
-    TasksCard
+    TasksCard,
+    DateCard,
+    TimelineCard
 };
