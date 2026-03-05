@@ -8,40 +8,62 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    background-color: #f8f9fb;
+    /* Premium light gray */
 }
 
-.dashboardContainer::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('../../assets/dashboard.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(15px);
-    transform: scale(1.1);
-    z-index: -1;
-}
+/* Overlay removed as per request to remove background image */
 
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.30);
-    z-index: 0;
-}
 
 .scrollContent {
     position: relative;
     z-index: 1;
     width: 100%;
     height: 100%;
-    padding: 1.5rem;
     box-sizing: border-box;
     overflow-y: auto;
+    display: flex;
+}
+
+.widgetsColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 280px;
+    height: calc(100vh - 30px);
+    overflow: hidden;
+    padding-bottom: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.widgetsColumn.hidden {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.calendarColumn {
+    position: absolute;
+    top: 15px;
+    left: 310px;
+    right: calc(45% + 15px);
+    height: calc(100vh - 30px);
+    display: flex;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+}
+
+.calendarColumn.hidden {
+    transform: scale(0.95);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.widgetRow {
+    display: flex;
+    gap: 15px;
+    width: 100%;
 }

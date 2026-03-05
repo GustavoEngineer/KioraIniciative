@@ -10,6 +10,7 @@ const subtaskController = require('../controllers/subtaskController'); // We'll 
 router.use(authMiddleware);
 
 router.get('/', taskController.getTasks);
+router.get('/search/date', taskController.getTasksByDate);
 router.get('/:id', taskController.getTaskById);
 router.post('/', taskController.createTask);
 router.patch('/:id', taskController.updateTask);

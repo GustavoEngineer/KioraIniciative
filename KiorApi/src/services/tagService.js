@@ -52,8 +52,25 @@ const deleteTag = async (supabase, id) => {
     return true;
 };
 
+const getTagById = async (supabase, id) => {
+    const { data, error } = await supabase
+        .from('tags')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+    if (error) {
+        if (error.code === 'PGRST116') {
+            throw { statusCode: 404, message: "Tag no encontrado o no tienes permiso" };
+        }
+        throw error;
+    }
+    return data;
+};
+
 module.exports = {
     getTags,
+    getTagById,
     createTag,
     updateTag,
     deleteTag

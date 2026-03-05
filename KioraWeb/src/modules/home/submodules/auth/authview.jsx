@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '../../../../common/components/typography';
+import { Typography } from '../../../../common/components/typography/typography';
 import styles from './authview.module.css';
 import LoginForm from './loginform/loginform';
 import RegisterView from './registerform/registerview';

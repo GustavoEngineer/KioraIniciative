@@ -11,6 +11,20 @@ const getTags = async (req, res, next) => {
     }
 };
 
+const getTagById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const supabase = getSupabaseClient(req);
+        const tag = await tagService.getTagById(supabase, id);
+        res.status(200).json(tag);
+    } catch (error) {
+        if (error.statusCode === 404) {
+            return res.status(404).json({ error: "No encontrado", code: "NOT_FOUND", details: { message: error.message } });
+        }
+        next(error);
+    }
+};
+
 const createTag = async (req, res, next) => {
     try {
         const { name } = req.body;
@@ -63,6 +77,7 @@ const deleteTag = async (req, res, next) => {
 
 module.exports = {
     getTags,
+    getTagById,
     createTag,
     updateTag,
     deleteTag

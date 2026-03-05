@@ -48,7 +48,7 @@ const getTaskById = async (supabase, taskId) => {
 };
 
 const createTask = async (supabase, taskData, userId) => {
-    const { title, description, priority, tag_id } = taskData;
+    const { title, description, priority, tag_id, due_date } = taskData;
 
     const { data, error } = await supabase
         .from('tasks')
@@ -57,7 +57,8 @@ const createTask = async (supabase, taskData, userId) => {
             title,
             description,
             priority: priority || 1,
-            tag_id: tag_id || null
+            tag_id: tag_id || null,
+            due_date: due_date || null
         }])
         .select()
         .single();
@@ -67,7 +68,7 @@ const createTask = async (supabase, taskData, userId) => {
 };
 
 const updateTask = async (supabase, taskId, updates) => {
-    // updates puede contener: title, description, is_completed, priority, tag_id
+    // updates puede contener: title, description, is_completed, priority, tag_id, due_date
     const { data, error } = await supabase
         .from('tasks')
         .update(updates)
@@ -98,10 +99,32 @@ const deleteTask = async (supabase, taskId) => {
     return true;
 };
 
+const getTasksByDate = async (supabase, userId, date) => {
+    // Aseguramos que buscamos en el rango completo del día
+    const startOfDay = `${date}T00:00:00.000Z`;
+    const endOfDay = `${date}T23:59:59.999Z`;
+
+    const { data, error } = await supabase
+        .from('tasks')
+        .select(`
+            *,
+            tags (id, name),
+            subtasks (id, description, is_completed)
+        `)
+        .eq('user_id', userId)
+        .gte('due_date', startOfDay)
+        .lte('due_date', endOfDay)
+        .order('due_date', { ascending: true });
+
+    if (error) throw error;
+    return data;
+};
+
 module.exports = {
     getTasks,
     getTaskById,
     createTask,
     updateTask,
-    deleteTask
+    deleteTask,
+    getTasksByDate
 };

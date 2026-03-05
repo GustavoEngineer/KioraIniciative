@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Typography } from '../typography';
 import styles from './Card.module.css';
 
-const Card = ({ children, title, className = '' }) => {
+const Card = ({ children, className = '' }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
@@ -11,11 +10,6 @@ const Card = ({ children, title, className = '' }) => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            {title && (
-                <Typography variant="body" className={styles.title}>
-                    {title}
-                </Typography>
-            )}
             {children}
         </div>
     );

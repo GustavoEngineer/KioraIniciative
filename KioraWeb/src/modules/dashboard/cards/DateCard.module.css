@@ -1,0 +1,82 @@
+.container {
+    background-color: #1e1d23;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: auto;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.5rem;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.daySection {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.dayNumber {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #ffffff;
+    font-family: 'Barlow Condensed', sans-serif;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.dateText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.weekday {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: capitalize;
+}
+
+.monthYear {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: capitalize;
+}
+
+.timeSection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.timeLabel {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.2);
+    letter-spacing: 2px;
+}
+
+.timeValue {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #ffffff;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+}

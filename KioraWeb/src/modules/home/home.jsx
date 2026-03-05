@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography } from '../../common/components/typography';
+import { Typography } from '../../common/components/typography/typography';
 import styles from './home.module.css';
 
 const Home = ({ onStart }) => {

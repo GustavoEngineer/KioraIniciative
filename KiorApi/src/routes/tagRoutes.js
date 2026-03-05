@@ -7,6 +7,7 @@ const tagController = require('../controllers/tagController');
 router.use(authMiddleware);
 
 router.get('/', tagController.getTags);
+router.get('/:id', tagController.getTagById);
 router.post('/', tagController.createTag);
 router.put('/:id', tagController.updateTag);
 router.delete('/:id', tagController.deleteTag);
