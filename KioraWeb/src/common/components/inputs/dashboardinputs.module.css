@@ -1,0 +1,59 @@
+.input,
+.textarea,
+.select {
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: #ffffff;
+    font-family: 'Geologica', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.input::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+.textarea {
+    resize: none;
+}
+
+.select {
+    appearance: none;
+    cursor: pointer;
+}
+
+.select option {
+    background-color: #1e1d23;
+    color: #ffffff;
+}
+
+.range {
+    width: 100%;
+    accent-color: #ffffff;
+    cursor: pointer;
+    margin: 10px 0;
+}

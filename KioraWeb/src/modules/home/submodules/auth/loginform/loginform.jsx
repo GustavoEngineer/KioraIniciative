@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './loginform.module.css';
-import { Input } from '../../../../../common/components/inputs/inputsmodel';
+import { Input } from '../../../../../common/components/inputs/homeinputs';
 import { SimpleButton } from '../../../../../common/components/buttons/simplebotons';
 import { useLogin } from '../hooks/useLogin';
 

@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import styles from './TaskDeck.module.css';
-import ViewTask from '../submodules/viewtasks/ViewTask';
 import { Typography } from '../../../common/components/typography/typography';
 
 const CARD_STEP = 60;   // px visibles por carta (paso de la ola)
@@ -53,7 +52,7 @@ const TaskDeck = ({ tasks, onTaskSelect }) => {
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
             >
-                {tasks.map((task, index) => (
+                {/* tasks.map((task, index) => (
                     <ViewTask
                         key={task.id}
                         task={task}
@@ -63,7 +62,7 @@ const TaskDeck = ({ tasks, onTaskSelect }) => {
                         isActive={index === activeIndex}
                         onSelect={onTaskSelect}
                     />
-                ))}
+                )) */}
             </div>
         </div>
     );

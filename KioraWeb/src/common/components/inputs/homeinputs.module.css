@@ -11,28 +11,20 @@
     color: rgba(255, 255, 255, 0.6);
     font-size: 1.4rem;
     pointer-events: none;
-    /* Evita que el click en el ícono interfiera */
     transition: color 0.3s ease;
 }
 
 .inputWrapper:focus-within .inputIcon {
     color: rgba(255, 255, 255, 0.9);
-    /* Se vuelve blanco sólido cuando seleccionas el input */
 }
 
 .inputField {
     width: 100%;
     padding: 1.2rem 1.8rem;
     border-radius: 10px;
-
-    /* 2. Borde Gris Claro */
     border: 1px solid rgba(255, 255, 255, 0.17);
-
-    /* 1. Fondo del Input Oscuro (sin blur) */
     background: rgba(0, 0, 0, 0.6);
-
     color: white;
-    /* El texto introducido por el usuario sigue blanco para leer bien */
     font-size: 1.1rem;
     font-family: 'Instrument Sans', sans-serif;
     outline: none;
@@ -41,10 +33,8 @@
 
 .withIcon {
     padding-left: 3.5rem;
-    /* Da espacio a la izquierda para acomodar el ícono */
 }
 
-/* 3. Labels (Placeholder) en Gris Claro */
 .inputField::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }

@@ -70,7 +70,7 @@ const CalendarCard = () => {
                         <div className={styles.miniCalendarPopover}>
                             <div className={styles.miniMonthGrid}>
                                 {dayNames.map((name, idx) => (
-                                    <div key={`name-${idx}`} className={styles.miniDayName}>{name}</div>
+                                    <div key={`dayname-${idx}`} className={styles.miniDayName}>{name}</div>
                                 ))}
                                 {Array.from({ length: adjustedFirstDay }).map((_, i) => (
                                     <div key={`empty-${i}`} className={styles.miniEmptyDay} />

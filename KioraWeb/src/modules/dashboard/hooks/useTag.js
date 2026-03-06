@@ -38,21 +38,21 @@ export const useTags = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchTags = async () => {
-            setIsLoading(true);
-            setError(null);
-            const { data, error } = await tagService.getTags();
-            if (error) {
-                setError(error.message || 'Error al obtener los tags');
-            } else {
-                setTags(data || []);
-            }
-            setIsLoading(false);
-        };
+    const fetchTags = async () => {
+        setIsLoading(true);
+        setError(null);
+        const { data, error } = await tagService.getTags();
+        if (error) {
+            setError(error.message || 'Error al obtener los tags');
+        } else {
+            setTags(data || []);
+        }
+        setIsLoading(false);
+    };
 
+    useEffect(() => {
         fetchTags();
     }, []);
 
-    return { tags, isLoading, error };
+    return { tags, isLoading, error, refetchTags: fetchTags };
 };

@@ -17,6 +17,7 @@ router.patch('/:id', taskController.updateTask);
 router.delete('/:id', taskController.deleteTask);
 
 // Rutas anidadas de subtareas (creación dependiente de la tarea)
+router.get('/:taskId/subtasks', subtaskController.getSubtasksByTask);
 router.post('/:taskId/subtasks', subtaskController.createSubtask);
 
 module.exports = router;

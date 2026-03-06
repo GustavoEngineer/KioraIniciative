@@ -44,5 +44,26 @@ export const tagService = {
         } catch (error) {
             return { data: null, error };
         }
+    },
+
+    /**
+     * Crea un nuevo tag para el usuario
+     */
+    async createTag(name) {
+        try {
+            const headers = await getAuthHeaders();
+            const response = await fetch(`${API_URL}/tags`, {
+                method: 'POST',
+                headers,
+                body: JSON.stringify({ name })
+            });
+            if (!response.ok) {
+                const err = await response.json().catch(() => ({}));
+                throw new Error(err.error || `HTTP ${response.status}`);
+            }
+            return { data: await response.json(), error: null };
+        } catch (error) {
+            return { data: null, error };
+        }
     }
 };

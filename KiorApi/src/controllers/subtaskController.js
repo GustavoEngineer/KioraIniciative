@@ -1,6 +1,17 @@
 const subtaskService = require('../services/subtaskService');
 const { getSupabaseClient } = require('../config/supabaseClient');
 
+const getSubtasksByTask = async (req, res, next) => {
+    try {
+        const { taskId } = req.params;
+        const supabase = getSupabaseClient(req);
+        const subtasks = await subtaskService.getSubtasksByTask(supabase, taskId);
+        res.status(200).json(subtasks);
+    } catch (error) {
+        next(error);
+    }
+};
+
 const createSubtask = async (req, res, next) => {
     try {
         const { taskId } = req.params;
@@ -11,12 +22,9 @@ const createSubtask = async (req, res, next) => {
         }
 
         const supabase = getSupabaseClient(req);
-        // Intentamos crear la subtarea. Si el usuario no tiene permisos sobre
-        // la tarea 'taskId' (RLS fail), supabase lanzará un error que atrapará el global handler.
         const newSubtask = await subtaskService.createSubtask(supabase, taskId, description.trim());
         res.status(201).json(newSubtask);
     } catch (error) {
-        // En caso de error PGRST116 o error de foreign key que implica que la tarea no existe
         if (error.code === '23503' || error.code === 'PGRST116') {
             return res.status(404).json({ error: "No encontrado", code: "NOT_FOUND", details: { message: "La tarea padre no existe o no tienes permiso" } });
         }
@@ -64,6 +72,7 @@ const deleteSubtask = async (req, res, next) => {
 };
 
 module.exports = {
+    getSubtasksByTask,
     createSubtask,
     updateSubtask,
     deleteSubtask

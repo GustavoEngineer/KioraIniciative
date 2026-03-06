@@ -1,3 +1,14 @@
+const getSubtasksByTask = async (supabase, taskId) => {
+    const { data, error } = await supabase
+        .from('subtasks')
+        .select('*')
+        .eq('task_id', taskId)
+        .order('created_at', { ascending: true });
+
+    if (error) throw error;
+    return data || [];
+};
+
 const createSubtask = async (supabase, taskId, description) => {
     const { data, error } = await supabase
         .from('subtasks')
@@ -48,6 +59,7 @@ const deleteSubtask = async (supabase, subtaskId) => {
 };
 
 module.exports = {
+    getSubtasksByTask,
     createSubtask,
     updateSubtask,
     deleteSubtask

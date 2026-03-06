@@ -6,15 +6,26 @@ import { useTag } from '../../../modules/dashboard/hooks/useTag';
 // Formatea una fecha como "Mié 04 Mar"
 const formatDate = (dateStr) => {
     if (!dateStr) return null;
-    const date = new Date(dateStr);
-    const day = date.toLocaleDateString('es-ES', { weekday: 'short' });
-    const num = date.getDate().toString().padStart(2, '0');
-    const month = date.toLocaleDateString('es-ES', { month: 'short' });
-    return `${day.charAt(0).toUpperCase() + day.slice(1)} ${num} ${month.charAt(0).toUpperCase() + month.slice(1)}`;
+    try {
+        const pureDate = dateStr.includes('T') ? dateStr.split('T')[0] : dateStr;
+        const [year, month, day] = pureDate.split('-').map(Number);
+
+        if (isNaN(year) || isNaN(month) || isNaN(day)) return null;
+
+        const date = new Date(year, month - 1, day);
+        const dayName = date.toLocaleDateString('es-ES', { weekday: 'short' });
+        const num = date.getDate().toString().padStart(2, '0');
+        const monthShort = date.toLocaleDateString('es-ES', { month: 'short' });
+
+        const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+        return `${cap(dayName)} ${num} ${cap(monthShort)}`;
+    } catch (e) {
+        return null;
+    }
 };
 
 // Sub-componente que resuelve un tag por ID si no viene el nombre
-const TagPill = ({ tag }) => {
+export const TagPill = ({ tag }) => {
     const needsFetch = !tag.name;
     const { tag: fetched } = useTag(needsFetch ? tag.id : null);
     const name = tag.name || fetched?.name;

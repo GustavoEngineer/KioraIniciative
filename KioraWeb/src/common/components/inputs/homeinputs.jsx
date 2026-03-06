@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
-import styles from './inputsmodel.module.css';
+import styles from './homeinputs.module.css';
 
 export const Input = ({ type = "text", placeholder = "", icon, value, onChange, className = "", ...props }) => {
     return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './registerform.module.css';
-import { Input } from '../../../../../common/components/inputs/inputsmodel';
+import { Input } from '../../../../../common/components/inputs/homeinputs';
 import { SimpleButton } from '../../../../../common/components/buttons/simplebotons';
 import { useRegister } from '../hooks/useRegister';
 
