@@ -1,13 +1,14 @@
 .input,
 .textarea,
 .select {
-    background-color: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 12px 16px;
-    color: #ffffff;
-    font-family: 'Geologica', sans-serif;
-    font-size: 0.95rem;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #000000;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
     transition: all 0.2s ease;
     width: 100%;
     box-sizing: border-box;
@@ -15,45 +16,233 @@
 
 .input::placeholder,
 .textarea::placeholder {
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(0, 0, 0, 0.3);
 }
 
 .input:focus,
 .textarea:focus,
 .select:focus {
     outline: none;
-    background-color: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.input::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.2s ease;
-}
-
-.input::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
+    background-color: #ffffff;
+    border-color: #000000;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.03);
 }
 
 .textarea {
     resize: none;
+    min-height: 80px;
 }
 
 .select {
     appearance: none;
     cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
 }
 
 .select option {
-    background-color: #1e1d23;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* DASH TOGGLE */
+.toggleWrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.toggleLabel {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.4);
+    font-family: 'Space Grotesk', sans-serif;
+    min-width: 60px;
+}
+
+.toggleActive .toggleLabel {
+    color: #000000;
+}
+
+.toggleTrack {
+    width: 36px;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 20px;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggleThumb {
+    width: 14px;
+    height: 14px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.toggleActive .toggleTrack {
+    background-color: #000000;
+}
+
+.toggleActive .toggleThumb {
+    left: 19px;
+}
+
+/* DAY SELECTOR */
+.daySelector {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.dayBtn {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 50px;
+    text-align: center;
+}
+
+.dayBtn:hover {
+    background-color: #f9f9f9;
+    border-color: #d2d0d0;
+}
+
+.dayBtnActive {
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    padding: 7px 15px;
+    /* Adjust for thicker border */
+}
+
+/* OPTION CARD */
+.optionCard {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.optionCard:hover {
+    border-color: #d2d0d0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.optionCardSelected {
+    border: 2px solid #000000;
+    padding: calc(1.25rem - 1px);
+}
+
+.optionCardDark {
+    background-color: #2a2a2a;
+    border-color: #2a2a2a;
+}
+
+.optionCardDark:hover {
+    background-color: #333;
+}
+
+.optionCardDark .optionContent h4 {
     color: #ffffff;
 }
 
-.range {
-    width: 100%;
-    accent-color: #ffffff;
-    cursor: pointer;
-    margin: 10px 0;
+.optionCardDark .optionContent p {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.optionIcon {
+    flex-shrink: 0;
+    color: #000000;
+}
+
+.optionCardDark .optionIcon {
+    color: #ffffff;
+}
+
+.optionContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.optionHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.optionContent h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #000000;
+    margin: 0;
+}
+
+.optionBadge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    background-color: #f0f0f0;
+    color: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.optionContent p {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.4);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.optionCheck {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.optionCardSelected .optionCheck {
+    background-color: #000000;
+    border-color: #000000;
+    color: #ffffff;
+}
+
+.optionCardDark .optionCheck {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.optionCardDark.optionCardSelected .optionCheck {
+    background-color: transparent;
+    border-color: transparent;
 }

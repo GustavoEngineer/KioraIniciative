@@ -1,0 +1,69 @@
+.drumContainer {
+    /* We use var with fallbacks to allow parents to override these values */
+    height: var(--carousel-height, 180px);
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.drum {
+    width: 120px;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+.drum::-webkit-scrollbar {
+    display: none;
+}
+
+.spacer {
+    min-height: var(--item-height, 60px);
+}
+
+.drumItem {
+    min-height: var(--item-height, 60px);
+    height: var(--item-height, 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-base, 2.5rem);
+    font-weight: var(--font-weight-base, 500);
+    color: var(--item-color, rgba(0, 0, 0, 0.15));
+    scroll-snap-align: center;
+    transition: all 0.2s ease;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.drumItem.selected {
+    color: var(--item-selected-color, #000000);
+    font-size: var(--font-size-selected, 4rem);
+    font-weight: var(--font-weight-selected, 700);
+    transform: var(--transform-selected, scale(1.1));
+}
+
+.unitWrapper {
+    position: absolute;
+    right: 15%;
+    height: var(--item-height, 60px);
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.unit {
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.4);
+    letter-spacing: 2px;
+}

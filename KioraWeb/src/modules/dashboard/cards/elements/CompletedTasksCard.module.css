@@ -1,0 +1,108 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Gauge Section */
+.circularContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    height: 120px;
+}
+
+.svg {
+    /* Rainbow orientation (standing up) */
+    position: absolute;
+    bottom: 0;
+}
+
+.bgCircle {
+    stroke: rgba(0, 0, 0, 0.05);
+}
+
+.progressCircle {
+    stroke: #2563eb;
+    transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.centerText {
+    position: absolute;
+    bottom: -15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+}
+
+.current {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #000000;
+    font-family: 'Barlow Condensed', sans-serif;
+}
+
+/* Breakdown Section */
+.breakdown {
+    display: flex;
+    padding: 1.5rem 0;
+    border-top: 1.5px solid #d2d0d0;
+    margin-top: auto;
+}
+
+.breakdownItem {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    border-right: 1.5px solid #d2d0d0;
+}
+
+.breakdownItem:last-child {
+    border-right: none;
+}
+
+.iconCircle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.categoryName {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.categoryValue {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #000000;
+}
+
+/* Footer Section */
+.footerLine {
+    padding: 1rem 1.5rem;
+    background: rgba(0, 0, 0, 0.02);
+    border-top: 1.5px solid #d2d0d0;
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.footerLine strong {
+    color: #000000;
+    font-weight: 700;
+}

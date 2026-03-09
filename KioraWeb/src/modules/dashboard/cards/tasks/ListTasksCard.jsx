@@ -1,12 +1,10 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
 import { useTasks } from '../../hooks/useTasks';
-import { useSubtasks } from '../../hooks/useSubtasks';
-import TaskCard, { TagPill } from '../../../../common/components/cards/TaskCard';
-import { Typography } from '../../../../common/components/typography/typography';
+import DashboardCard from '../../../../common/components/cards/DashboardCard';
 import styles from './ListTasksCard.module.css';
-import TaskDeck from '../../components/TaskDeck';
-import TaskFormAdd from './TaskFormAdd';
+import TaskCard, { TagPill } from '../../../../common/components/cards/TaskCard';
+import TaskFormAdd from './newtask/TaskFormAdd';
 
 
 const ListTasksCard = ({ onTaskClick, isFocused, tasks, isLoading, error, refetchTasks }) => {
@@ -20,26 +18,22 @@ const ListTasksCard = ({ onTaskClick, isFocused, tasks, isLoading, error, refetc
     };
 
     return (
-        <div className={`${styles.container} ${isFocused ? styles.focusedContainer : ''}`}>
-            <div className={styles.header}>
-                <div className={styles.titleRow}>
-                    <Typography variant="dashboard-title">
-                        {isAdding ? 'Nueva Tarea' : 'Tareas'}
-                    </Typography>
-                </div>
-                <button
-                    className={`${styles.addBtn} ${isAdding ? styles.activeAddBtn : ''}`}
-                    aria-label={isAdding ? "Cancelar" : "Agregar tarea"}
-                    onClick={toggleAdding}
-                >
-                    <Icon
-                        icon={isAdding ? "solar:close-square-broken" : "solar:add-square-broken"}
-                        className={styles.addIcon}
-                    />
-                </button>
-            </div>
+        <DashboardCard
+            title={isAdding ? 'Nueva Tarea' : 'Tareas'}
+            className={`${styles.container} ${isFocused ? styles.focusedContainer : ''}`}
+        >
+            <button
+                className={`${styles.addBtn} ${isAdding ? styles.activeAddBtn : ''}`}
+                aria-label={isAdding ? "Cancelar" : "Agregar tarea"}
+                onClick={toggleAdding}
+            >
+                <Icon
+                    icon={isAdding ? "solar:close-square-broken" : "solar:add-square-broken"}
+                    className={styles.addIcon}
+                />
+            </button>
 
-            <div className={styles.content}>
+            <div className={`${styles.content} ${isAdding ? styles.hideOverflow : ''}`}>
                 {isAdding ? (
                     <TaskFormAdd
                         onCancel={() => setIsAdding(false)}
@@ -73,7 +67,7 @@ const ListTasksCard = ({ onTaskClick, isFocused, tasks, isLoading, error, refetc
                     </>
                 )}
             </div>
-        </div>
+        </DashboardCard>
     );
 };
 
