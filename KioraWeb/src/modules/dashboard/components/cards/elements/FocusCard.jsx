@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import DashboardCard from '../../../../common/components/cards/DashboardCard';
-import ValueCarousel from '../../../../common/components/elements/ValueCarousel';
+import DashboardCard from '../../../../../common/components/cards/DashboardCard';
+import ValueCarousel from '../../../../../common/components/elements/ValueCarousel';
 import styles from './FocusCard.module.css';
 
 const FocusCard = () => {

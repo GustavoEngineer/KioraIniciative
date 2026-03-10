@@ -1,0 +1,103 @@
+.attribute {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.2rem 0;
+    transition: all 0.2s ease;
+}
+
+.attribute.multiline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.5rem 0;
+}
+
+.labelArea {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 0.9rem;
+    font-weight: 400;
+    min-width: 130px;
+    flex-shrink: 0;
+}
+
+.icon {
+    flex-shrink: 0;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.label {
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.valueWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.value {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1f2937;
+    transition: all 0.2s ease;
+}
+
+/* Variants */
+.statusValue {
+    background-color: #fef3c7;
+    color: #92400e;
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.statusValue .value {
+    color: #92400e;
+    font-weight: 600;
+}
+
+/* Add a dot before status as in image */
+.statusValue::before {
+    content: '●';
+    font-size: 0.6rem;
+    margin-right: 6px;
+    color: #f59e0b;
+}
+
+.priorityValue {
+    background-color: #eef2ff;
+    color: #3730a3;
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.priorityValue .value {
+    color: #3730a3;
+    font-weight: 600;
+}
+
+.multiline {
+    margin-top: 0.5rem;
+}
+
+.multiline .labelArea {
+    margin-bottom: 0.5rem;
+}
+
+.multiline .value {
+    background-color: #f9fafb;
+    padding: 1.25rem;
+    border-radius: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: 400;
+    line-height: 1.6;
+    border: 1px solid #e5e7eb;
+    color: #4b5563;
+}

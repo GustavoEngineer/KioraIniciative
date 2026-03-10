@@ -17,7 +17,7 @@ CREATE TABLE tags (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 4. Tabla de Tareas
+-- 4. Tabla de Tareas (Con el nuevo campo estimated_time)
 CREATE TABLE tasks (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
@@ -26,6 +26,7 @@ CREATE TABLE tasks (
     description TEXT,
     is_completed BOOLEAN DEFAULT FALSE,
     priority SMALLINT DEFAULT 1 CHECK (priority >= 1 AND priority <= 10),
+    estimated_time DECIMAL(5,2) DEFAULT 0 CHECK (estimated_time >= 0), -- Nuevo Atributo
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 

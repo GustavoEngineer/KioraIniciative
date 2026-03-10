@@ -1,9 +1,9 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
-import { useTasks } from '../../hooks/useTasks';
-import DashboardCard from '../../../../common/components/cards/DashboardCard';
+import { useTasks } from '../../../hooks/useTasks';
+import DashboardCard from '../../../../../common/components/cards/DashboardCard';
 import styles from './ListTasksCard.module.css';
-import TaskCard, { TagPill } from '../../../../common/components/cards/TaskCard';
+import TaskCard, { TagPill } from '../../../../../common/components/cards/TaskCard';
 import TaskFormAdd from './newtask/TaskFormAdd';
 
 

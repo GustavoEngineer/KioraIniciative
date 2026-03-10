@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
-import { useTags } from '../../../hooks/useTag';
-import { taskService } from '../../../services/taskService';
-import { tagService } from '../../../services/tagService';
+import { useTags } from '../../../../hooks/useTag';
+import { taskService } from '../../../../services/taskService';
+import { tagService } from '../../../../services/tagService';
+import { convertToDecimalHours } from '../../../../../../common/utils/timeConverter';
 
-import { DashInput, DashTextArea } from '../../../../../common/components/inputs/dashboardinputs';
+import { DashInput, DashTextArea } from '../../../../../../common/components/inputs/dashboardinputs';
 
 // Import split styles
 import generalStyles from './NewTask.module.css';
@@ -18,6 +19,8 @@ const TaskFormAdd = ({ onCancel, onSuccess }) => {
     const [tagInput, setTagInput] = useState('');
     const [showTagDropdown, setShowTagDropdown] = useState(false);
     const [dueDate, setDueDate] = useState('');
+    const [estHours, setEstHours] = useState('');
+    const [estMinutes, setEstMinutes] = useState('');
     const [subtaskInputs, setSubtaskInputs] = useState(['']);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [activeTab, setActiveTab] = useState('default');
@@ -86,7 +89,8 @@ const TaskFormAdd = ({ onCancel, onSuccess }) => {
                 description: description.trim(),
                 priority: parseInt(priority),
                 tag_id: finalTagId || null,
-                due_date: dueDate || null
+                due_date: dueDate || null,
+                estimated_time: convertToDecimalHours(estHours, estMinutes)
             });
 
             if (taskError) throw taskError;
@@ -235,13 +239,42 @@ const TaskFormAdd = ({ onCancel, onSuccess }) => {
                             />
                         </div>
 
-                        <div className={generalStyles.inputGroup}>
-                            <label className={generalStyles.label}>Fecha de Entrega</label>
-                            <DashInput
-                                type="date"
-                                value={dueDate}
-                                onChange={(e) => setDueDate(e.target.value)}
-                            />
+                        <div className={generalStyles.row}>
+                            <div className={generalStyles.inputGroup}>
+                                <label className={generalStyles.label}>Fecha de Entrega</label>
+                                <DashInput
+                                    type="date"
+                                    value={dueDate}
+                                    onChange={(e) => setDueDate(e.target.value)}
+                                />
+                            </div>
+
+                            <div className={generalStyles.inputGroup}>
+                                <label className={generalStyles.label}>Tiempo Estimado</label>
+                                <div className={inputStyles.timeInputsWrapper}>
+                                    <div className={inputStyles.timeInputItem}>
+                                        <DashInput
+                                            type="number"
+                                            value={estHours}
+                                            onChange={(e) => setEstHours(e.target.value)}
+                                            placeholder="HH"
+                                            min="0"
+                                        />
+                                        <span className={inputStyles.timeUnit}>h</span>
+                                    </div>
+                                    <div className={inputStyles.timeInputItem}>
+                                        <DashInput
+                                            type="number"
+                                            value={estMinutes}
+                                            onChange={(e) => setEstMinutes(e.target.value)}
+                                            placeholder="MM"
+                                            min="0"
+                                            max="59"
+                                        />
+                                        <span className={inputStyles.timeUnit}>m</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ) : (

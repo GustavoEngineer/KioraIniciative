@@ -50,9 +50,9 @@
     padding: 0.2rem 0.6rem;
     background-color: rgba(0, 0, 0, 0.04);
     border-radius: 6px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #000000;
 }
 
 /* FILA INFERIOR: Urgencia + Estado */

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTasks } from '../../hooks/useTasks';
-import DashboardCard from '../../../../common/components/cards/DashboardCard';
+import { useTasks } from '../../../hooks/useTasks';
+import DashboardCard from '../../../../../common/components/cards/DashboardCard';
 import styles from './CompletedTasksCard.module.css';
 import { Icon } from '@iconify/react';
 

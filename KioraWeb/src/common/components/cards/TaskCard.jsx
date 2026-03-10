@@ -17,7 +17,7 @@ const getPriorityInfo = (level) => {
     return { label: 'Baja', icon: 'solar:flag-bold', color: '#10b981' };
 };
 
-export const TagPill = ({ tag }) => {
+export const TagPill = ({ tag, hideIcon }) => {
     const needsFetch = !tag.name;
     const { tag: fetched } = useTag(needsFetch ? tag.id : null);
     const name = tag.name || fetched?.name;
@@ -25,7 +25,7 @@ export const TagPill = ({ tag }) => {
 
     return (
         <div className={styles.tagPill}>
-            <Icon icon="solar:hashtag-bold" width={12} />
+            {!hideIcon && <Icon icon="solar:hashtag-bold" width={12} />}
             <span>{name}</span>
         </div>
     );

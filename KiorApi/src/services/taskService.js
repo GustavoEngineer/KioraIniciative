@@ -48,7 +48,7 @@ const getTaskById = async (supabase, taskId) => {
 };
 
 const createTask = async (supabase, taskData, userId) => {
-    const { title, description, priority, tag_id, due_date } = taskData;
+    const { title, description, priority, tag_id, due_date, estimated_time } = taskData;
 
     const { data, error } = await supabase
         .from('tasks')
@@ -58,7 +58,8 @@ const createTask = async (supabase, taskData, userId) => {
             description,
             priority: priority || 1,
             tag_id: tag_id || null,
-            due_date: due_date || null
+            due_date: due_date || null,
+            estimated_time: estimated_time || 0
         }])
         .select()
         .single();

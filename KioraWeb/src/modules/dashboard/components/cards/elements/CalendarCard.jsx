@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import DashboardCard from '../../../../common/components/cards/DashboardCard';
-import { useTasksByDate } from '../../hooks/useTasksByDate';
+import DashboardCard from '../../../../../common/components/cards/DashboardCard';
+import { useTasksByDate } from '../../../hooks/useTasksByDate';
 import { Icon } from '@iconify/react';
 import styles from './CalendarCard.module.css';
-import TaskCard from '../../../../common/components/cards/TaskCard';
+import TaskCard from '../../../../../common/components/cards/TaskCard';
 
 const CalendarCard = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -79,7 +79,7 @@ const CalendarCard = () => {
                     return (
                         <div
                             key={idx}
-                            className={`${styles.dayHeaderItem} ${isSelected ? styles.activeDay : ''} ${isToday ? styles.today : ''} ${isPast ? styles.past : ''}`}
+                            className={`${styles.dayHeaderItem} ${isSelected ? styles.activeDay : ''} ${isToday ? styles.today : ''} ${isPast ? styles.past : ''} `}
                             onClick={() => setSelectedDate(date)}
                         >
                             <span className={styles.dayLabel}>{dayLabelsShort[idx]}</span>

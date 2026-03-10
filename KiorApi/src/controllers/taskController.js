@@ -28,7 +28,7 @@ const getTaskById = async (req, res, next) => {
 
 const createTask = async (req, res, next) => {
     try {
-        const { title, description, priority, tag_id, due_date } = req.body;
+        const { title, description, priority, tag_id, due_date, estimated_time } = req.body;
 
         if (!title || title.trim().length === 0) {
             return res.status(400).json({ error: "Validación fallida", code: "VALIDATION_ERROR", details: { message: "El título de la tarea es obligatorio" } });
@@ -39,7 +39,7 @@ const createTask = async (req, res, next) => {
         }
 
         const supabase = getSupabaseClient(req);
-        const newTask = await taskService.createTask(supabase, { title: title.trim(), description, priority, tag_id, due_date }, req.user.id);
+        const newTask = await taskService.createTask(supabase, { title: title.trim(), description, priority, tag_id, due_date, estimated_time }, req.user.id);
         res.status(201).json(newTask);
     } catch (error) {
         next(error);
@@ -49,7 +49,7 @@ const createTask = async (req, res, next) => {
 const updateTask = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { title, description, is_completed, priority, tag_id, due_date } = req.body;
+        const { title, description, is_completed, priority, tag_id, due_date, estimated_time } = req.body;
 
         // Evitamos enviar propiedades undefined al update de Supabase
         const updates = {};
@@ -58,6 +58,7 @@ const updateTask = async (req, res, next) => {
         if (is_completed !== undefined) updates.is_completed = is_completed;
         if (tag_id !== undefined) updates.tag_id = tag_id === "" ? null : tag_id;
         if (due_date !== undefined) updates.due_date = due_date === "" ? null : due_date;
+        if (estimated_time !== undefined) updates.estimated_time = estimated_time;
 
         if (priority !== undefined) {
             if (priority < 1 || priority > 10) {

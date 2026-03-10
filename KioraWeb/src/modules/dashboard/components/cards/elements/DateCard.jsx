@@ -1,5 +1,5 @@
 import React from 'react';
-import DashboardCard from '../../../../common/components/cards/DashboardCard';
+import DashboardCard from '../../../../../common/components/cards/DashboardCard';
 import styles from './DateCard.module.css';
 
 const DateCard = () => {

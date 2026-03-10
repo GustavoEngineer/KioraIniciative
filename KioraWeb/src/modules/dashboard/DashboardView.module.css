@@ -39,22 +39,140 @@
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.widgetsColumn>div:nth-child(1) {
-    flex: 1;
-}
-
-.widgetsColumn>div:nth-child(2) {
-    flex: 1.4;
-}
-
-.widgetsColumn>div:nth-child(3) {
-    flex: 0.8;
+.widgetsColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    overflow: hidden;
+    padding-bottom: 0;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .widgetsColumn.hidden {
+    display: none;
+}
+
+.topCardWrapper {
+    flex: 3;
+    /* 30% of total widgets space */
+    position: relative;
+    width: 100%;
+}
+
+.dateCardWrapper,
+.timeCardWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, visibility 0.4s ease;
+}
+
+.dateCardWrapper {
+    visibility: visible;
+    z-index: 1;
+    transform: translateX(0);
+    opacity: 1;
+    /* When returning (slide in), delay 0.2s so it comes last */
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 0.5s ease 0.2s, visibility 0.4s ease 0.2s;
+}
+
+.timeCardWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 45vh; /* 45% of the screen height */
+    z-index: 10;   /* Higher than bottom widgets to overlap them */
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, visibility 0.4s ease;
+}
+
+.quickCalendarWrapper {
+    position: absolute;
+    top: 45vh; /* Starts below TimeCard */
+    left: 0;
+    width: 100%;
+    height: 55vh; /* Remaining 55% of the screen */
+    z-index: 10;
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, visibility 0.4s ease;
+}
+
+.slideIn {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.slideInDelayed {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s, opacity 0.5s ease 0.05s, visibility 0.4s ease 0.05s;
+}
+
+.slideDateOut {
     transform: translateX(-100%);
     opacity: 0;
     pointer-events: none;
+    /* When hiding (slide out), no delay so it goes first */
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0s, opacity 0.5s ease 0s;
+}
+
+.bottomWidgets {
+    display: flex;
+    flex-direction: column;
+    flex: 7;
+    /* 70% of total widgets space */
+}
+
+.completedTasksWrapper {
+    flex: 5;
+    /* 50% relative to total 10 */
+    display: flex;
+    flex-direction: column;
+    transform: translateX(0);
+    opacity: 1;
+    /* When returning, delay 0.1s */
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.5s ease 0.1s;
+}
+
+.slideCompletedOut {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    /* When hiding, delay 0.1s */
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.5s ease 0.1s;
+}
+
+.focusCardWrapper {
+    flex: 2;
+    /* 20% relative to total 10 */
+    display: flex;
+    flex-direction: column;
+    transform: translateX(0);
+    opacity: 1;
+    /* When returning, no delay so it comes first */
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0s, opacity 0.5s ease 0s;
+}
+
+.slideFocusOut {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    /* When hiding, delay 0.2s */
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 0.5s ease 0.2s;
 }
 
 .calendarColumn {
@@ -66,6 +184,37 @@
     display: flex;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 1;
+    overflow: hidden;
+}
+
+.cardTransitionContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.calendarCardWrapper,
+.infoCardWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.infoCardWrapper {
+    transform: translateY(-100%);
+    z-index: 2;
+}
+
+.showInfo .calendarCardWrapper {
+    transform: translateY(100%);
+}
+
+.showInfo .infoCardWrapper {
+    transform: translateY(0);
 }
 
 .calendarColumn.hidden {

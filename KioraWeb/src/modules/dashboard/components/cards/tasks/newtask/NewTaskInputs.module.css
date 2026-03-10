@@ -57,3 +57,31 @@
     font-style: italic;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
+
+.timeInputsWrapper {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    width: 100%;
+}
+
+.timeInputItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.timeInputItem input {
+    padding-right: 25px !important;
+    text-align: center;
+}
+
+.timeUnit {
+    position: absolute;
+    right: 10px;
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: 600;
+    pointer-events: none;
+}
