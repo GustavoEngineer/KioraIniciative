@@ -35,11 +35,11 @@ const createSubtask = async (req, res, next) => {
 const updateSubtask = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { description, is_completed } = req.body;
+        const { description, status } = req.body;
 
         const updates = {};
         if (description !== undefined) updates.description = description.trim();
-        if (is_completed !== undefined) updates.is_completed = is_completed;
+        if (status !== undefined) updates.status = status;
 
         if (Object.keys(updates).length === 0) {
             return res.status(400).json({ error: "Validación fallida", code: "VALIDATION_ERROR", details: { message: "No se enviaron campos válidos para actualizar" } });

@@ -1,0 +1,158 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 50vh;
+    width: 30vw;
+    height: 50vh;
+    padding: 2.5rem 2rem;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    z-index: 10;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    overflow: hidden;
+}
+
+.visible {
+    top: 0;
+    opacity: 1;
+    visibility: visible;
+}
+
+.hidden {
+    top: -50vh;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.focused {
+    left: 0 !important;
+    transition-delay: 0.2s;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.monthGroup {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.monthTitle {
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    text-transform: capitalize;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.yearText {
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: #c7c7cc;
+}
+
+.navGroup {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.navBtn {
+    background: #f2f2f7;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #8e8e93;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+}
+
+.navBtn:hover {
+    background: #e5e5ea;
+    color: #3b82f6;
+}
+
+.calendarBody {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dayLabelsGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 0.5rem;
+}
+
+.dayLabel {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #c7c7cc;
+}
+
+.daysGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    flex: 1;
+    gap: 4px;
+}
+
+.dayCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    border-radius: 8px;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dayCell:hover {
+    background-color: #f2f2f7;
+}
+
+.otherMonth {
+    color: #d1d1d6;
+    font-weight: 400;
+}
+
+.today, .targetDate {
+    background-color: #3b82f6 !important;
+    color: #ffffff !important;
+    border-radius: 50% !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    z-index: 2;
+}
+
+.inRange {
+    background-color: rgba(59, 130, 246, 0.1) !important;
+    color: #3b82f6 !important;
+    border-radius: 0;
+    z-index: 1;
+}
+
+.inRange:hover {
+    background-color: rgba(59, 130, 246, 0.2) !important;
+}
+

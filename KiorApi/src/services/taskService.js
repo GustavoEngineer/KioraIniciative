@@ -1,17 +1,26 @@
 const getTasks = async (supabase, userId, filters = {}) => {
+    const limit = parseInt(filters.limit, 10) || 8;
+    const page = parseInt(filters.page, 10) || 1;
+    const from = (page - 1) * limit;
+    const to = from + limit - 1;
+
     let query = supabase
         .from('tasks')
         .select(`
             *,
             tags (id, name),
-            subtasks (id, description, is_completed)
-        `)
-        .order('created_at', { ascending: false });
+            subtasks (id, description, status)
+        `, { count: 'exact' })
+        .eq('user_id', userId)
+        .order('priority', { ascending: false })
+        .order('created_at', { ascending: false })
+        .range(from, to);
 
     // Aplicar filtros opcionales (ej: status, priority)
-    if (filters.is_completed !== undefined) {
-        query = query.eq('is_completed', filters.is_completed === 'true');
+    if (filters.status) {
+        query = query.eq('status', filters.status);
     }
+
 
     if (filters.priority) {
         query = query.eq('priority', parseInt(filters.priority, 10));
@@ -21,10 +30,10 @@ const getTasks = async (supabase, userId, filters = {}) => {
         query = query.eq('tag_id', filters.tag_id);
     }
 
-    const { data, error } = await query;
+    const { data, error, count } = await query;
 
     if (error) throw error;
-    return data;
+    return { tasks: data, total: count };
 };
 
 const getTaskById = async (supabase, taskId) => {
@@ -33,7 +42,7 @@ const getTaskById = async (supabase, taskId) => {
         .select(`
             *,
             tags (id, name),
-            subtasks (id, description, is_completed, created_at)
+            subtasks (id, description, status, created_at)
         `)
         .eq('id', taskId)
         .single();
@@ -48,7 +57,7 @@ const getTaskById = async (supabase, taskId) => {
 };
 
 const createTask = async (supabase, taskData, userId) => {
-    const { title, description, priority, tag_id, due_date, estimated_time } = taskData;
+    const { title, description, priority, tag_id, status, estimated_time, due_date } = taskData;
 
     const { data, error } = await supabase
         .from('tasks')
@@ -56,10 +65,11 @@ const createTask = async (supabase, taskData, userId) => {
             user_id: userId,
             title,
             description,
-            priority: priority || 1,
+            priority: priority || 2,
             tag_id: tag_id || null,
-            due_date: due_date || null,
-            estimated_time: estimated_time || 0
+            status: status || 'Por hacer',
+            estimated_time: estimated_time || 0,
+            due_date: due_date || null
         }])
         .select()
         .single();
@@ -69,7 +79,7 @@ const createTask = async (supabase, taskData, userId) => {
 };
 
 const updateTask = async (supabase, taskId, updates) => {
-    // updates puede contener: title, description, is_completed, priority, tag_id, due_date
+    // updates puede contener: title, description, status, priority, tag_id, due_date
     const { data, error } = await supabase
         .from('tasks')
         .update(updates)
@@ -101,21 +111,16 @@ const deleteTask = async (supabase, taskId) => {
 };
 
 const getTasksByDate = async (supabase, userId, date) => {
-    // Aseguramos que buscamos en el rango completo del día
-    const startOfDay = `${date}T00:00:00.000Z`;
-    const endOfDay = `${date}T23:59:59.999Z`;
-
     const { data, error } = await supabase
         .from('tasks')
         .select(`
             *,
             tags (id, name),
-            subtasks (id, description, is_completed)
+            subtasks (id, description, status)
         `)
         .eq('user_id', userId)
-        .gte('due_date', startOfDay)
-        .lte('due_date', endOfDay)
-        .order('due_date', { ascending: true });
+        .eq('due_date', date) // Filtrar directamente por el campo DATE de Postgres (formato YYYY-MM-DD)
+        .order('created_at', { ascending: true });
 
     if (error) throw error;
     return data;

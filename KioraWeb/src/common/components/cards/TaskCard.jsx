@@ -11,10 +11,14 @@ import { useTag } from '../../../modules/dashboard/hooks/useTag';
  * - Borde y sombra personalizados
  */
 
-const getPriorityInfo = (level) => {
-    if (level >= 8) return { label: 'Urgente', icon: 'solar:flag-bold', color: '#ef4444' };
-    if (level >= 5) return { label: 'Media', icon: 'solar:flag-bold', color: '#f59e0b' };
-    return { label: 'Baja', icon: 'solar:flag-bold', color: '#10b981' };
+export const getPriorityInfo = (level) => {
+    const priorityMap = {
+        2: { label: 'Baja', icon: 'solar:flag-bold', color: '#10b981' },
+        5: { label: 'Media', icon: 'solar:flag-bold', color: '#f59e0b' },
+        8: { label: 'Alta', icon: 'solar:flag-bold', color: '#ef4444' },
+        10: { label: 'Crítica', icon: 'solar:flag-bold', color: '#9333ea' }
+    };
+    return priorityMap[level] || priorityMap[5];
 };
 
 export const TagPill = ({ tag, hideIcon }) => {
@@ -31,37 +35,56 @@ export const TagPill = ({ tag, hideIcon }) => {
     );
 };
 
-const TaskCard = ({ task, onClick }) => {
+const TaskCard = ({ task, onClick, variant }) => {
+    const isCompact = variant === 'compact';
     const raw = task.tags;
     const tags = raw
         ? Array.isArray(raw) ? raw : [raw]
         : task.tag_id ? [{ id: task.tag_id }] : [];
 
     const priority = getPriorityInfo(task.priority || 5);
+    
+    // Formatear fecha: 12 Jan 2024
+    const formatDate = (dateStr) => {
+        if (!dateStr) return 'Sin fecha';
+        // Usar '-' por '/' para evitar desfases de zona horaria al parsear strings de solo fecha
+        const date = new Date(dateStr.includes('T') ? dateStr : dateStr.replace(/-/g, '/'));
+        return date.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
+    };
 
     return (
-        <div className={styles.taskCard} onClick={onClick}>
-            <div className={styles.topRow}>
-                <div className={styles.titleArea}>
-                    <h4 className={styles.title}>{task.title}</h4>
-                    {tags.length > 0 && (
-                        <TagPill tag={tags[0]} />
-                    )}
+        <div className={`${styles.taskCard} ${isCompact ? styles.compact : ''}`} onClick={onClick}>
+            <div className={styles.priorityDateRow}>
+                <div className={styles.priorityPill} style={{ backgroundColor: `${priority.color}15`, color: priority.color }}>
+                    <Icon icon={priority.icon} width={14} />
+                    <span>{priority.label}</span>
                 </div>
+                {!isCompact && (
+                    <div className={styles.dateInfo}>
+                        <Icon icon="solar:calendar-minimalistic-bold" width={16} />
+                        <span>{formatDate(task.due_date)}</span>
+                    </div>
+                )}
             </div>
 
-            <div className={styles.bottomRow}>
-                <div className={styles.metaInfo}>
-                    <div className={styles.metaItem} style={{ color: priority.color }}>
-                        <Icon icon={priority.icon} width={14} />
-                        <span>{priority.label}</span>
-                    </div>
-                    <div className={styles.metaItem}>
-                        <Icon icon="solar:hourglass-bold" width={14} />
-                        <span>{task.is_completed ? 'Terminada' : 'En Progreso'}</span>
-                    </div>
-                </div>
+            <div className={styles.bodyContent}>
+                <h4 className={styles.title}>{task.title}</h4>
+                {!isCompact && task.description && (
+                    <p className={styles.description}>{task.description}</p>
+                )}
             </div>
+
+            {!isCompact && tags.length > 0 && (
+                <div className={styles.tagsRow}>
+                    {tags.map((tag, idx) => (
+                        <TagPill key={idx} tag={tag} hideIcon />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

@@ -27,7 +27,7 @@ const createSubtask = async (supabase, taskId, description) => {
 };
 
 const updateSubtask = async (supabase, subtaskId, updates) => {
-    // updates puede contener: description, is_completed
+    // updates puede contener: description, status
     const { data, error } = await supabase
         .from('subtasks')
         .update(updates)

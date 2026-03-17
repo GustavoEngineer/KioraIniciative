@@ -4,9 +4,9 @@ const { getSupabaseClient } = require('../config/supabaseClient');
 const getTasks = async (req, res, next) => {
     try {
         const supabase = getSupabaseClient(req);
-        // req.query puede traer ?is_completed=true&priority=5
-        const tasks = await taskService.getTasks(supabase, req.user.id, req.query);
-        res.status(200).json(tasks);
+        // req.query puede traer ?status=En proceso&importance=Anotado&page=1&limit=8
+        const result = await taskService.getTasks(supabase, req.user.id, req.query);
+        res.status(200).json(result);
     } catch (error) {
         next(error);
     }
@@ -28,18 +28,18 @@ const getTaskById = async (req, res, next) => {
 
 const createTask = async (req, res, next) => {
     try {
-        const { title, description, priority, tag_id, due_date, estimated_time } = req.body;
+        const { title, description, priority, tag_id, importance, estimated_time, due_date } = req.body;
 
         if (!title || title.trim().length === 0) {
             return res.status(400).json({ error: "Validación fallida", code: "VALIDATION_ERROR", details: { message: "El título de la tarea es obligatorio" } });
         }
 
-        if (priority && (priority < 1 || priority > 10)) {
-            return res.status(400).json({ error: "Validación fallida", code: "VALIDATION_ERROR", details: { message: "La prioridad debe estar entre 1 y 10" } });
+        if (priority && ![2, 5, 8, 10].includes(parseInt(priority, 10))) {
+            return res.status(400).json({ error: "Validación fallida", code: "VALIDATION_ERROR", details: { message: "La prioridad debe ser 2, 5, 8 o 10" } });
         }
 
         const supabase = getSupabaseClient(req);
-        const newTask = await taskService.createTask(supabase, { title: title.trim(), description, priority, tag_id, due_date, estimated_time }, req.user.id);
+        const newTask = await taskService.createTask(supabase, { title: title.trim(), description, priority, tag_id, importance, estimated_time, due_date }, req.user.id);
         res.status(201).json(newTask);
     } catch (error) {
         next(error);
@@ -49,20 +49,21 @@ const createTask = async (req, res, next) => {
 const updateTask = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { title, description, is_completed, priority, tag_id, due_date, estimated_time } = req.body;
+        const { title, description, status, importance, priority, tag_id, estimated_time, due_date } = req.body;
 
         // Evitamos enviar propiedades undefined al update de Supabase
         const updates = {};
         if (title !== undefined) updates.title = title.trim();
         if (description !== undefined) updates.description = description;
-        if (is_completed !== undefined) updates.is_completed = is_completed;
+        if (status !== undefined) updates.status = status;
+        if (importance !== undefined) updates.importance = importance;
         if (tag_id !== undefined) updates.tag_id = tag_id === "" ? null : tag_id;
-        if (due_date !== undefined) updates.due_date = due_date === "" ? null : due_date;
         if (estimated_time !== undefined) updates.estimated_time = estimated_time;
+        if (due_date !== undefined) updates.due_date = due_date === "" ? null : due_date;
 
         if (priority !== undefined) {
-            if (priority < 1 || priority > 10) {
-                return res.status(400).json({ error: "Validación fallida", code: "VALIDATION_ERROR", details: { message: "La prioridad debe estar entre 1 y 10" } });
+            if (![2, 5, 8, 10].includes(parseInt(priority, 10))) {
+                return res.status(400).json({ error: "Validación fallida", code: "VALIDATION_ERROR", details: { message: "La prioridad debe ser 2, 5, 8 o 10" } });
             }
             updates.priority = priority;
         }

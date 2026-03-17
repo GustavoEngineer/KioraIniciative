@@ -1,0 +1,12 @@
+.sideBorders {
+    border-left: 1px solid #c4c4c4;
+    /* un gris claro */
+    border-right: 1px solid #c4c4c4;
+    border-radius: 0;
+    /* Si queremos quitar el radius para que se vea más como separador, podemos dejarlo opcional o según diseño */
+}
+
+.bottomBorder {
+    border-bottom: 1px solid #c4c4c4;
+    border-radius: 0;
+}

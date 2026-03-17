@@ -4,8 +4,8 @@ const getDashboardSummary = async (supabase, userId) => {
     const { data: tasks, error: tasksError } = await supabase
         .from('tasks')
         .select(`
-            id, title, priority, is_completed, created_at, tag_id,
-            subtasks (id, is_completed)
+            id, title, priority, status, created_at, tag_id,
+            subtasks (id, status)
         `);
 
     if (tasksError) throw tasksError;
@@ -36,22 +36,22 @@ const getDashboardSummary = async (supabase, userId) => {
 
     tasks.forEach(task => {
         // Conteo de Tasks
-        if (task.is_completed) completedTasks++;
+        if (task.status === 'Terminada') completedTasks++;
         else pendingTasks++;
 
         // Conteo de Subtasks
         if (task.subtasks) {
             totalSubtasks += task.subtasks.length;
-            completedSubtasks += task.subtasks.filter(st => st.is_completed).length;
+            completedSubtasks += task.subtasks.filter(st => st.status === 'Terminada').length;
         }
 
-        // Tareas Urgentes (prioridad 8 a 10, no completadas)
-        if (!task.is_completed && task.priority >= 8) {
+        // Tareas Urgentes (prioridad 8 a 10, no terminadas)
+        if (task.status !== 'Terminada' && task.priority >= 8) {
             urgentTasks.push({
                 id: task.id,
                 title: task.title,
                 priority: task.priority,
-                is_completed: task.is_completed
+                status: task.status
             });
         }
 
@@ -75,9 +75,32 @@ const getDashboardSummary = async (supabase, userId) => {
         tagsSummaryMap[tag.id] = { id: tag.id, name: tag.name, task_count: 0 };
     });
 
+    const prioritySummary = {
+        10: 0,
+        8: 0,
+        5: 0,
+        2: 0
+    };
+
+    const pendingPrioritySummary = {
+        10: 0,
+        8: 0,
+        5: 0,
+        2: 0
+    };
+
     tasks.forEach(task => {
         if (task.tag_id && tagsSummaryMap[task.tag_id]) {
             tagsSummaryMap[task.tag_id].task_count++;
+        }
+        
+        if (prioritySummary[task.priority] !== undefined) {
+            prioritySummary[task.priority]++;
+        }
+
+        // Nuevo: Conteo de prioridad solo para pendientes
+        if (task.status !== 'Terminada' && pendingPrioritySummary[task.priority] !== undefined) {
+            pendingPrioritySummary[task.priority]++;
         }
     });
 
@@ -93,6 +116,8 @@ const getDashboardSummary = async (supabase, userId) => {
         },
         urgent_tasks: urgentTasks,
         tags_summary: tagsSummary,
+        priority_distribution: prioritySummary, 
+        pending_priority_distribution: pendingPrioritySummary, // Nuevo campo para la gráfica de semicírculo
         today_created: todayCreated
     };
 };

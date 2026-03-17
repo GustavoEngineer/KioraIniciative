@@ -2,15 +2,17 @@
  * Representación del modelo Task.
  */
 class Task {
-    constructor({ id, user_id, tag_id, title, description, is_completed, priority, estimated_time, created_at, tags, subtasks }) {
+    constructor({ id, user_id, tag_id, title, description, status, importance, priority, estimated_time, due_date, created_at, tags, subtasks }) {
         this.id = id;
         this.user_id = user_id;
         this.tag_id = tag_id;
         this.title = title;
         this.description = description;
-        this.is_completed = is_completed;
+        this.status = status;
+        this.importance = importance;
         this.priority = priority;
         this.estimated_time = estimated_time;
+        this.due_date = due_date;
         this.created_at = created_at;
 
         // Relaciones

@@ -1,0 +1,206 @@
+.container {
+    position: fixed;
+    left: 50vh;
+    top: 0;
+    width: 30vw;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 2.5rem 2rem;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
+}
+
+.focused {
+    left: 0 !important;
+    transition-delay: 0.3s;
+}
+
+.splitMode {
+    height: 50vh;
+    top: 50vh;
+    border-top: 1px solid #e0e0e0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.headerTitleGroup {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+}
+
+.monthTitle {
+    font-size: 2.25rem !important;
+    font-weight: 800 !important;
+    color: #1a1a1a;
+}
+
+.yearSubtitle {
+    font-size: 1.25rem !important;
+    font-weight: 500 !important;
+    color: #c7c7cc;
+}
+
+.headerIcon {
+    display: flex;
+    align-items: center;
+}
+
+.calendarToggleIcon {
+    font-size: 1.5rem;
+    color: #8e8e93;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calendarToggleIcon:hover, .activeIcon {
+    color: #3b82f6;
+    transform: scale(1.1);
+}
+
+.weeklyStrip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 0.25rem 0.25rem;
+    width: 100%;
+}
+
+.dayItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: #c7c7cc;
+    padding: 0.5rem 0.25rem;
+    flex: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.dayNum {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+}
+
+.dayLabel {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+}
+
+.activeDay {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.activeDay .dayLabel {
+    color: #3b82f6 !important;
+}
+
+.taskList {
+    display: flex;
+    flex-direction: column;
+}
+
+.taskItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px dashed #efeff4;
+}
+
+.taskContent {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.taskIconWrapper {
+    font-size: 1.5rem;
+    color: #c7c7cc;
+    display: flex;
+    align-items: center;
+}
+
+.taskTitle {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+}
+
+.loadingState {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 0;
+    color: #8e8e93;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1rem;
+    text-align: center;
+    background-color: #f8f9fb;
+    border-radius: 16px;
+    margin-top: 1rem;
+    border: 1px dashed #e0e0e0;
+}
+
+.emptyText {
+    color: #8e8e93 !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+}
+
+.taskIconSuccess {
+    color: #34c759;
+}
+
+.taskTime {
+    font-weight: 500 !important;
+    color: #c7c7cc !important;
+}
+
+.taskMeta {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    background-color: #f2f2f7;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    color: #8e8e93 !important;
+}
+
+.past .taskTitle {
+    color: #1a1a1a;
+}
+
+.faded .taskTitle, 
+.faded .taskIcon {
+    color: #c7c7cc;
+}
+
+.dashedSquare {
+    width: 20px;
+    height: 20px;
+    border: 2px dashed #c7c7cc;
+    border-radius: 4px;
+}

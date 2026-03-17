@@ -6,7 +6,7 @@ export const taskService = {
     /**
      * Gets tasks from KiorApi passing Supabase auth token
      */
-    async getTasks() {
+    async getTasks(params = {}) {
         // 1. Get current session/token from Supabase
         const { data: { session }, error: sessionError } = await supabase.auth.getSession();
 
@@ -14,9 +14,12 @@ export const taskService = {
             return { data: null, error: sessionError || new Error('No active session') };
         }
 
+        const { page = 1, limit = 8 } = params;
+        const queryParams = new URLSearchParams({ page, limit }).toString();
+
         try {
             // 2. Fetch data from our API with token in Authorization header
-            const response = await fetch(`${API_URL}/tasks`, {
+            const response = await fetch(`${API_URL}/tasks?${queryParams}`, {
                 headers: {
                     'Authorization': `Bearer ${session.access_token}`,
                     'Content-Type': 'application/json'
@@ -188,6 +191,31 @@ export const taskService = {
 
             return { data: true, error: null };
         } catch (error) {
+            return { data: null, error };
+        }
+    },
+
+    async getDashboardSummary() {
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError || !session) return { data: null, error: sessionError || new Error('No auth session') };
+
+        try {
+            const response = await fetch(`${API_URL}/dashboard`, {
+                headers: {
+                    'Authorization': `Bearer ${session.access_token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || 'Error al obtener el resumen');
+            }
+
+            const data = await response.json();
+            return { data, error: null };
+        } catch (error) {
+            console.error('Error fetching dashboard summary:', error);
             return { data: null, error };
         }
     }

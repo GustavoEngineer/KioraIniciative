@@ -1,0 +1,194 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 30vw;
+    /* Back to original position (touching AgendaCard) */
+    width: 40vw;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 1rem 2rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
+    transition-delay: 0s;
+    /* Immediate exit when losing focus */
+}
+
+.focused {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: all !important;
+    transition-delay: 0.1s !important;
+}
+
+.formViewPort {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    padding: 1rem 0;
+}
+
+.slidingContainer {
+    display: flex;
+    width: 200%;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateX(-50%);
+    /* Default to show form */
+}
+
+.planningMode {
+    transform: translateX(0);
+    /* Show subtasks */
+}
+
+.contentSection {
+    width: 50%;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.titleRow {
+    width: 100%;
+}
+
+.detailsRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    width: 100%;
+}
+
+.leftCol {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.rightCol {
+    display: flex;
+    flex-direction: column;
+}
+
+.rightCol > div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.rightCol :global(.fieldGroup) {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+}
+
+.rightCol :global(textarea) {
+    flex: 1;
+    min-height: unset !important;
+}
+
+.saveButton {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 1rem 3.5rem;
+    border-radius: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.saveButton:hover:not(:disabled) {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+}
+
+.saveButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #9ca3af;
+    box-shadow: none;
+}
+
+.secondaryButton {
+    background-color: transparent;
+    color: #4b5563;
+    border: 1.5px solid #e5e7eb;
+    padding: 1rem 2.5rem;
+    border-radius: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: buttonFadeIn 0.3s ease-out;
+}
+
+.secondaryButton:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+    color: #1a1a1a;
+    transform: translateY(-2px);
+}
+
+@keyframes buttonFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.cancelButton {
+    background-color: transparent;
+    color: #8e8e93;
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancelButton:hover {
+    color: #ff3b30;
+}
+
+
+@keyframes itemEnter {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

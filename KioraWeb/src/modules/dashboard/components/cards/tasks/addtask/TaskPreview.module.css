@@ -1,0 +1,136 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 70vw;
+    width: 30vw;
+    height: 30vh;
+    background-color: #ffffff;
+    border-left: 1px solid #f2f2f7;
+    border-bottom: 1px solid #f2f2f7;
+    padding: 0;
+    box-sizing: border-box;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    animation: slideInDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.topSection {
+    height: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.detailSection {
+    flex: 1;
+    padding: 2.5rem 2rem;
+    overflow-y: auto;
+    background-color: #ffffff;
+}
+
+.previewLabel, .detailLabel {
+    font-size: 0.7rem !important;
+    font-weight: 800 !important;
+    color: #c7c7cc !important;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem !important;
+    text-transform: uppercase;
+}
+
+.detailTitle {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.metaInfo {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.metaItem {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #8e8e93;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.metaItem svg {
+    color: #3b82f6;
+    font-size: 1.1rem;
+}
+
+.sectLabel {
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    color: #8e8e93 !important;
+    margin-bottom: 1rem !important;
+}
+
+.descriptionBox {
+    margin-bottom: 2.5rem;
+}
+
+.fullDescription {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #48484a;
+    margin: 0;
+}
+
+.subtasksList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.subtaskItem {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1rem;
+    background-color: #f8f9fb;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.stIcon {
+    color: #c7c7cc;
+    font-size: 1.1rem;
+}
+
+.emptySt {
+    color: #c7c7cc;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.cardWrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.cardWrapper > div {
+    width: 100%;
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

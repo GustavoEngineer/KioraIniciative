@@ -1,35 +1,18 @@
 import React from 'react';
-import DashboardCard from '../../../../../common/components/cards/DashboardCard';
 import styles from './DateCard.module.css';
 
-const DateCard = () => {
+const DateCard = ({ isHidden }) => {
     const today = new Date();
-
-    const getDayNumber = (date) => {
-        const day = date.getDate();
-        return day < 10 ? `0${day}` : day;
-    };
-
-    const getWeekday = (date) => {
-        return new Intl.DateTimeFormat('es-ES', {
-            weekday: 'long'
-        }).format(date);
-    };
-
-    const getMonth = (date) => {
-        return new Intl.DateTimeFormat('es-ES', {
-            month: 'long'
-        }).format(date);
-    };
+    const day = today.getDate();
+    const month = today.toLocaleDateString('es-ES', { month: 'short' }).toUpperCase();
 
     return (
-        <DashboardCard title="Hoy">
-            <div className={styles.content}>
-                <span className={styles.month}>{getMonth(today)}</span>
-                <span className={styles.dayNumber}>{getDayNumber(today)}</span>
-                <span className={styles.weekday}>{getWeekday(today)}</span>
+        <div className={`${styles.container} ${isHidden ? styles.hidden : ''}`}>
+            <div className={styles.dateSection}>
+                <span className={styles.day}>{day}</span>
+                <span className={styles.month}>{month}</span>
             </div>
-        </DashboardCard>
+        </div>
     );
 };
 

@@ -63,15 +63,18 @@ Columnas:
 - **`tag_id`**: UUID, `REFERENCES tags(id) ON DELETE SET NULL` — etiqueta asociada (opcional). Si la etiqueta se borra, se pone `NULL`.
 - **`title`**: `TEXT NOT NULL CHECK (char_length(title) > 0)` — título de la tarea; check garantiza no string vacío.
 - **`description`**: `TEXT` — descripción libre de la tarea.
-- **`is_completed`**: `BOOLEAN DEFAULT FALSE` — estado de completado.
-- **`priority`**: `SMALLINT DEFAULT 1 CHECK (priority >= 1 AND priority <= 10)` — prioridad en rango 1..10; valor por defecto `1`.
+- **`status`**: `task_status DEFAULT 'Por hacer'` — estado de la tarea (Por hacer, En proceso, Terminada).
+- **`priority`**: `SMALLINT DEFAULT 2 CHECK (priority IN (2, 5, 8, 10))` — prioridad con valores específicos: 2 (Baja), 5 (Media), 8 (Alta), 10 (Crítica).
+- **`estimated_time`**: `DECIMAL(5,2) DEFAULT 0 CHECK (estimated_time >= 0)` — tiempo estimado en horas.
+- **`due_date`**: `DATE` — fecha de entrega (sin hora).
 - **`created_at`**: `TIMESTAMPTZ DEFAULT NOW()` — fecha de creación.
 
 Restricciones y notas:
 
-- `priority` utiliza `SMALLINT` y un `CHECK` para forzar valores entre 1 y 10 (ajuste solicitado).
+- `priority` utiliza `SMALLINT` y un `CHECK` para forzar valores específicos (2, 5, 8, 10).
 - `title` tiene `CHECK` para evitar títulos vacíos.
 - `tag_id` no es obligatorio; la relación usa `ON DELETE SET NULL` para mantener la tarea si la etiqueta se elimina.
+- Se eliminó el atributo `importance` por requerimiento.
 
 ---
 
