@@ -1,77 +1,32 @@
 .container {
     position: fixed;
     top: 0;
-    left: 30vw;
-    /* Back to original position (touching AgendaCard) */
-    width: 40vw;
+    left: 30vw; /* Regresamos a la posición original para mantener el ancho interno */
+    width: 70vw; 
     height: 100vh;
     background-color: #ffffff;
-    padding: 1rem 2rem;
+    padding: 4rem 2rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
-    z-index: 1;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
-    transition-delay: 0s;
-    /* Immediate exit when losing focus */
+    align-items: flex-start;
+    z-index: 1100; /* Por encima de TaskGeneralInfoCard (1000) pero debajo de AgendaCard (1200) */
 }
-
-.focused {
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: all !important;
-    transition-delay: 0.1s !important;
-}
-
-.formViewPort {
-    max-width: 1100px;
-    width: 100%;
-    margin: 0 auto;
-    overflow: hidden;
-    position: relative;
-    padding: 1rem 0;
-}
-
-.slidingContainer {
-    display: flex;
-    width: 200%;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    transform: translateX(-50%);
-    /* Default to show form */
-}
-
-.planningMode {
-    transform: translateX(0);
-    /* Show subtasks */
-}
-
-.contentSection {
-    width: 50%;
-    padding: 0 2rem;
-    box-sizing: border-box;
-}
-
 
 .form {
     width: 100%;
+    /* Max-width eliminado para ocupar todo el ancho del card */
+    height: auto;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-}
-
-.titleRow {
-    width: 100%;
+    gap: 2rem;
 }
 
 .detailsRow {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    grid-template-columns: 1fr 1fr; /* Dividido equitativamente */
+    gap: 3rem; /* Espacio optimizado entre columnas */
     width: 100%;
 }
 
@@ -81,49 +36,75 @@
     gap: 1.5rem;
 }
 
+.dateTimeRow {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.dateTimeRow > * {
+    flex: 1; /* Make both inputs take equal space */
+}
+
 .rightCol {
     display: flex;
     flex-direction: column;
+    gap: 1.5rem;
+    min-height: 0;
 }
 
-.rightCol > div {
+.topRight {
+    flex: 0 0 auto;
+}
+
+.bottomRight {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+/* Custom scrollbar for subtasks area */
+.bottomRight::-webkit-scrollbar {
+    width: 4px;
+}
+
+.bottomRight::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.bottomRight::-webkit-scrollbar-thumb {
+    background: #e5e7eb;
+    border-radius: 10px;
+}
+
+.actions {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
     display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.rightCol :global(.fieldGroup) {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    height: 100%;
-}
-
-.rightCol :global(textarea) {
-    flex: 1;
-    min-height: unset !important;
+    gap: 1rem;
+    align-items: center;
 }
 
 .saveButton {
+    width: 60px;
+    height: 60px;
     background-color: #3b82f6;
     color: white;
     border: none;
-    padding: 1rem 3.5rem;
-    border-radius: 14px;
-    font-size: 1.05rem;
-    font-weight: 600;
+    border-radius: 50%;
+    font-size: 2rem;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    justify-content: center;
 }
 
 .saveButton:hover:not(:disabled) {
     background-color: #2563eb;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
 }
 
 .saveButton:disabled {
@@ -131,62 +112,48 @@
     cursor: not-allowed;
     background-color: #9ca3af;
     box-shadow: none;
-}
-
-.secondaryButton {
-    background-color: transparent;
-    color: #4b5563;
-    border: 1.5px solid #e5e7eb;
-    padding: 1rem 2.5rem;
-    border-radius: 14px;
-    font-size: 1.05rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    animation: buttonFadeIn 0.3s ease-out;
-}
-
-.secondaryButton:hover {
-    background-color: #f9fafb;
-    border-color: #d1d5db;
-    color: #1a1a1a;
-    transform: translateY(-2px);
-}
-
-@keyframes buttonFadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    transform: none;
 }
 
 .cancelButton {
-    background-color: transparent;
+    width: 60px;
+    height: 60px;
+    background-color: #ffffff;
     color: #8e8e93;
-    border: none;
-    padding: 1rem 1.5rem;
-    font-size: 1.05rem;
-    font-weight: 600;
+    border: 1px solid #e5e7eb;
+    border-radius: 50%;
+    font-size: 1.8rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cancelButton:hover {
+    background-color: #ffffff;
     color: #ff3b30;
+    border-color: #ffccc7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 59, 48, 0.1);
 }
 
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
 
 @keyframes itemEnter {
     from {
         opacity: 0;
         transform: translateY(10px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);

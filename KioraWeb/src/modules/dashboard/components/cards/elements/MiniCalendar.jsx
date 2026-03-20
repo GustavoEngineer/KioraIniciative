@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Typography } from '../../../../../common/components/typography/typography';
 import styles from './MiniCalendar.module.css';
+import '../../transitions/dashboard_AddTask.css';
 
 const MiniCalendar = ({ isVisible, isFocused, onDaySelect, selectedDate }) => {
     const today = useMemo(() => {
@@ -69,9 +70,9 @@ const MiniCalendar = ({ isVisible, isFocused, onDaySelect, selectedDate }) => {
 
     return (
         <div className={`
-            ${styles.container} 
-            ${isVisible ? styles.visible : styles.hidden}
-            ${isFocused ? styles.focused : ''}
+            ${styles.container} agenda-mini-container-transition
+            ${isVisible ? 'mini-visible-transition' : 'mini-hidden-transition'}
+            ${isFocused ? 'agenda-mini-focused-transition' : ''}
         `}>
             <div className={styles.header}>
                 <div className={styles.monthGroup}>
@@ -117,13 +118,17 @@ const MiniCalendar = ({ isVisible, isFocused, onDaySelect, selectedDate }) => {
                                 className={`
                                     ${styles.dayCell} 
                                     ${!dayObj.isCurrentMonth ? styles.otherMonth : ''}
-                                    ${isToday ? styles.today : ''}
-                                    ${isTarget && !isToday ? styles.targetDate : ''}
                                     ${isInRange ? styles.inRange : ''}
                                 `}
                                 onClick={() => onDaySelect && onDaySelect(dayObj.date)}
                             >
-                                <span className={styles.dayNumber}>{dayObj.date.getDate()}</span>
+                                <span className={`
+                                    ${styles.dayNumber}
+                                    ${isToday ? styles.today : ''}
+                                    ${isTarget && !isToday ? styles.targetDate : ''}
+                                `}>
+                                    {dayObj.date.getDate()}
+                                </span>
                             </div>
                         );
                     })}

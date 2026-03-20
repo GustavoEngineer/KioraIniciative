@@ -7,15 +7,33 @@
 
 .label {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #4b5563;
 }
 
 .requiredAsterisk {
     color: #ff3b30;
     margin-left: 2px;
     font-weight: 700;
+}
+
+.timeGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.timeGrid:focus-within .smallInput {
+    color: #3b82f6;
+}
+
+.timeGrid:focus-within {
+    border-color: #e5e7eb; /* Keep same border */
+    background-color: #f9fafb; /* Keep same background */
 }
 
 .timeControlUnified {
@@ -29,7 +47,6 @@
     width: 100%;
     box-sizing: border-box;
     box-sizing: border-box;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .timeControlUnified:focus-within {
@@ -57,7 +74,7 @@
     width: 35px;
     font-size: 0.9rem;
     font-weight: 600;
-    color: #8e8e8e;
+    color: #4b5563;
     font-family: 'Space Grotesk', sans-serif;
     text-align: center;
     outline: none;

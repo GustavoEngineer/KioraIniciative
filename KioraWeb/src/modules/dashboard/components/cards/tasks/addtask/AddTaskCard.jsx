@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { FiPlus, FiList, FiCheck } from 'react-icons/fi';
+import { Icon } from '@iconify/react';
 import { useTags } from '../../../../hooks/useTag';
 import { taskService } from '../../../../services/taskService';
 import { tagService } from '../../../../services/tagService';
 import styles from './AddTaskCard.module.css';
+import '../../../transitions/dashboard_AddTask.css';
 
 // Inputs
 import TaskTitleInput from './inputs/TaskTitleInput';
@@ -13,12 +14,11 @@ import TaskTimeInput from './inputs/TaskTimeInput';
 import TaskDateInput from './inputs/TaskDateInput';
 import SubtasksSection from './inputs/SubtasksSection';
 
-const AddTaskCard = ({ isFocused, initialDate, onTaskCreated, onCancel, onFormChange }) => {
+const AddTaskCard = ({ isFocused, initialDate, onTaskCreated, onCancel, onFormChange, onDateUpdate }) => {
     const { tags, isLoading: isLoadingTags, refetchTags } = useTags();
     const [isLoading, setIsLoading] = useState(false);
     const [tagSearch, setTagSearch] = useState('');
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const [isPlanning, setIsPlanning] = useState(false);
     const [subtasks, setSubtasks] = useState([]);
     const [newSubtask, setNewSubtask] = useState('');
     const [formData, setFormData] = useState({
@@ -37,12 +37,12 @@ const AddTaskCard = ({ isFocused, initialDate, onTaskCreated, onCancel, onFormCh
     }, [formData, tagSearch, subtasks, onFormChange]);
 
     useEffect(() => {
-        if (initialDate) {
+        if (initialDate && initialDate !== formData.due_date) {
             setFormData(prev => ({ ...prev, due_date: initialDate }));
         }
-    }, [initialDate]);
+    }, [initialDate, formData.due_date]);
 
-    const filteredTags = tags.filter(tag => 
+    const filteredTags = tags.filter(tag =>
         tag.name.toLowerCase().includes(tagSearch.toLowerCase())
     );
 
@@ -62,6 +62,7 @@ const AddTaskCard = ({ isFocused, initialDate, onTaskCreated, onCancel, onFormCh
 
     const handleAddSubtask = (e) => {
         if (e.key === 'Enter' || e.type === 'click') {
+            if (e.key === 'Enter') e.preventDefault(); // Prevent form submission
             if (newSubtask.trim()) {
                 setSubtasks([...subtasks, { id: Date.now(), title: newSubtask.trim() }]);
                 setNewSubtask('');
@@ -76,6 +77,10 @@ const AddTaskCard = ({ isFocused, initialDate, onTaskCreated, onCancel, onFormCh
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+
+        if (name === 'due_date' && onDateUpdate) {
+            onDateUpdate(value);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -133,113 +138,89 @@ const AddTaskCard = ({ isFocused, initialDate, onTaskCreated, onCancel, onFormCh
     };
 
     const handleCancel = () => {
-        setIsPlanning(false);
         if (onCancel) onCancel();
     };
 
-    const isFormValid = 
-        formData.title.trim() !== '' && 
-        tagSearch.trim() !== '' && 
+    const isFormValid =
+        formData.title.trim() !== '' &&
+        tagSearch.trim() !== '' &&
         (parseInt(formData.hours) > 0 || parseInt(formData.minutes) > 0) &&
         formData.due_date !== '';
 
     return (
-        <div className={`${styles.container} ${isFocused ? styles.focused : ''}`}>
-
-            <div className={styles.formViewPort}>
-                <div className={`${styles.slidingContainer} ${isPlanning ? styles.planningMode : ''}`}>
-                    {/* Subtasks View (Left) */}
-                    <div className={styles.contentSection}>
-                        <SubtasksSection 
-                            subtasks={subtasks}
-                            newSubtask={newSubtask}
-                            setNewSubtask={setNewSubtask}
-                            onAddSubtask={handleAddSubtask}
-                            onRemoveSubtask={removeSubtask}
+        <div className={`${styles.container} addtask-container-transition ${isFocused ? 'addtask-focused-transition' : ''}`}>
+            <form className={styles.form} onSubmit={handleSubmit}>
+                <div className={styles.detailsRow}>
+                    <div className={styles.leftCol}>
+                        <TaskTitleInput
+                            value={formData.title}
+                            onChange={handleChange}
                         />
+
+                        <TaskTagInput
+                            tagSearch={tagSearch}
+                            onTagChange={handleTagChange}
+                            filteredTags={filteredTags}
+                            showSuggestions={showSuggestions}
+                            setShowSuggestions={setShowSuggestions}
+                            selectTag={selectTag}
+                            isLoadingTags={isLoadingTags}
+                        />
+
+                        <div className={styles.dateTimeRow}>
+                            <TaskTimeInput
+                                hours={formData.hours}
+                                minutes={formData.minutes}
+                                onChange={handleChange}
+                            />
+
+                            <TaskDateInput
+                                value={formData.due_date}
+                                onChange={handleChange}
+                            />
+                        </div>
                     </div>
 
-                    {/* Main Form View (Right) */}
-                    <div className={styles.contentSection}>
-                        <form className={styles.form}>
-                            <div className={styles.titleRow}>
-                                <TaskTitleInput 
-                                    value={formData.title} 
-                                    onChange={handleChange} 
-                                />
-                            </div>
-
-                            <div className={styles.detailsRow}>
-                                <div className={styles.leftCol}>
-                                    <TaskTagInput 
-                                        tagSearch={tagSearch}
-                                        onTagChange={handleTagChange}
-                                        filteredTags={filteredTags}
-                                        showSuggestions={showSuggestions}
-                                        setShowSuggestions={setShowSuggestions}
-                                        selectTag={selectTag}
-                                        isLoadingTags={isLoadingTags}
-                                    />
-
-                                    <TaskTimeInput 
-                                        hours={formData.hours}
-                                        minutes={formData.minutes}
-                                        onChange={handleChange}
-                                    />
-
-                                    <TaskDateInput 
-                                        value={formData.due_date}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-
-                                <div className={styles.rightCol}>
-                                    <TaskDescriptionInput 
-                                        value={formData.description} 
-                                        onChange={handleChange} 
-                                    />
-                                </div>
-                            </div>
-                        </form>
+                    <div className={styles.rightCol}>
+                        <div className={styles.topRight}>
+                            <TaskDescriptionInput
+                                value={formData.description}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className={styles.bottomRight}>
+                            <SubtasksSection
+                                subtasks={subtasks}
+                                newSubtask={newSubtask}
+                                setNewSubtask={setNewSubtask}
+                                onAddSubtask={handleAddSubtask}
+                                onRemoveSubtask={removeSubtask}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className={styles.actions}>
-            <button 
-                type="button"
-                onClick={handleCancel}
-                className={styles.cancelButton}
-            >
-                Cancelar
-            </button>
-            {isPlanning ? (
-                <button 
-                    className={styles.secondaryButton}
-                    onClick={() => setIsPlanning(false)}
-                >
-                    Volver a detalles
-                </button>
-            ) : (
-                isFormValid && (
-                    <button 
-                        className={styles.secondaryButton}
-                        onClick={() => setIsPlanning(true)}
+                <div className={styles.actions}>
+                    <button
+                        type="button"
+                        onClick={handleCancel}
+                        className={styles.cancelButton}
+                        title="Cancelar"
                     >
-                        Seguir planificando
+                        <Icon icon="solar:undo-left-round-bold-duotone" />
                     </button>
-                )
-            )}
-            <button 
-                onClick={handleSubmit} 
-                disabled={isLoading || !isFormValid}
-                className={styles.saveButton}
-            >
-                {isLoading ? 'Guardando...' : 'Guardar Tarea'}
-            </button>
+                    <button
+                        type="submit"
+                        disabled={isLoading || !isFormValid}
+                        className={styles.saveButton}
+                        title="Guardar Tarea"
+                    >
+                        {isLoading ? <div className={styles.spinner} /> : <Icon icon="solar:bookmark-bold" />}
+                    </button>
+                </div>
+            </form>
         </div>
-    </div>
-);
+    );
 };
 
 export default AddTaskCard;

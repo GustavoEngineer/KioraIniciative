@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './HourCard.module.css';
+import '../../transitions/dashboard_AddTask.css';
 
-const HourCard = ({ isHidden }) => {
+const HourCard = ({ isHidden, isTaskFocused }) => {
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
@@ -11,16 +12,14 @@ const HourCard = ({ isHidden }) => {
         return () => clearInterval(timer);
     }, []);
 
-    const timeString = currentTime.toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    });
+    const hours = currentTime.getHours().toString().padStart(2, '0');
+    const minutes = currentTime.getMinutes().toString().padStart(2, '0');
 
     return (
-        <div className={`${styles.container} ${isHidden ? styles.hidden : ''}`}>
+        <div className={`${styles.container} datehour-container-transition ${isHidden ? 'datehour-hidden-transition' : ''} ${isTaskFocused ? 'datehour-taskfocused-transition' : ''}`}>
             <div className={styles.timeSection}>
-                <span className={styles.time}>{timeString}</span>
+                <span className={styles.hours}>{hours}</span>
+                <span className={styles.minutes}>{minutes}</span>
             </div>
         </div>
     );

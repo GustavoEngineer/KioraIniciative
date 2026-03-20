@@ -1,45 +1,29 @@
 .container {
     position: fixed;
-    top: 0;
-    left: 50vh;
+    top: 50vh; /* Movido abajo */
+    left: 15vw;
     width: 30vw;
     height: 50vh;
-    padding: 2.5rem 2rem;
+    padding: 1.5rem 1.5rem;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     z-index: 10;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     border-left: 1px solid #e0e0e0;
     border-right: 1px solid #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
+    border-top: none; /* Quitamos el borde superior a petición */
     overflow: hidden;
 }
 
-.visible {
-    top: 0;
-    opacity: 1;
-    visibility: visible;
-}
 
-.hidden {
-    top: -50vh;
-    opacity: 0;
-    visibility: hidden;
-}
-
-.focused {
-    left: 0 !important;
-    transition-delay: 0.2s;
-}
 
 .header {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem; /* Reducido de 1.5rem */
 }
 
 .monthGroup {
@@ -79,7 +63,6 @@
     cursor: pointer;
     color: #8e8e93;
     font-size: 1.1rem;
-    transition: all 0.2s ease;
 }
 
 .navBtn:hover {
@@ -97,7 +80,7 @@
 .dayLabelsGrid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem; /* Reducido de 0.5rem */
 }
 
 .dayLabel {
@@ -111,7 +94,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     flex: 1;
-    gap: 4px;
+    gap: 2px; /* Reducido de 4px */
 }
 
 .dayCell {
@@ -119,13 +102,12 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: #1a1a1a;
-    border-radius: 8px;
-    aspect-ratio: 1 / 1;
+    /* No aspect-ratio here to let the container decide height */
     cursor: pointer;
-    transition: all 0.2s ease;
+    min-height: 36px; /* Altura mínima para asegurar el círculo */
 }
 
 .dayCell:hover {
@@ -143,6 +125,12 @@
     border-radius: 50% !important;
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
     z-index: 2;
+    /* Forzar que el fondo ocupado sea un círculo perfecto */
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .inRange {

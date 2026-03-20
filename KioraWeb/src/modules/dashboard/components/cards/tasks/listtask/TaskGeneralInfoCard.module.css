@@ -1,0 +1,296 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 45vw; /* Inicia donde termina AgendaCard */
+    width: 55vw; /* Toma el resto de la pantalla */
+    z-index: 1000;
+    /* High z-index to stay above everything */
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timerActive {
+    left: 65vw !important;
+    width: 35vw !important;
+}
+
+.timerActive .card {
+    box-shadow: none !important; /* Quitamos la sombra para que no ensucie el borde del cronómetro */
+}
+
+.card {
+    background: #ffffff;
+    border-left: none; /* Quitamos el borde izquierdo por petición */
+    /* Match ListTasksCard side border if any */
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    width: 100%;
+    padding: 1.2rem 2rem 2.5rem 2rem; /* Reducimos padding superior para acercar las acciones al borde */
+    /* Match ListTasksCard padding */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.actionsBar {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.actionButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: none;
+    background-color: transparent;
+    color: #8e8e93;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.actionButton svg {
+    font-size: 1.4rem;
+}
+
+.actionButton:hover {
+    transform: translateY(-2px);
+}
+
+.startAction:hover {
+    background-color: #ecfdf5;
+    color: #10b981;
+}
+
+.editAction:hover {
+    background-color: #eff6ff;
+    color: #3b82f6;
+}
+
+.deleteAction {
+    margin-left: 0;
+}
+
+.deleteAction:hover {
+    background-color: #fef2f2;
+    color: #ef4444;
+}
+
+.completeAction:hover {
+    background-color: #f5f3ff;
+    color: #8b5cf6;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.iconContainer {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.title {
+    font-weight: 800;
+    color: #1a1a1a;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closeButton:hover {
+    color: #ef4444;
+    transform: scale(1.1);
+}
+
+.descriptionSection {
+    margin-top: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+}
+
+.descriptionSection.isEmpty {
+    border-style: dashed;
+    border-width: 2px;
+}
+
+.taskDescription {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0.8rem 0 0 0;
+}
+
+.placeholderContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.placeholderText {
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.3);
+    margin: 0;
+    font-style: italic;
+}
+
+.tabsContainer {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.tabBar {
+    display: flex;
+    gap: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.tabItem {
+    background: none;
+    border: none;
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tabItem:hover {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.tabItem.active {
+    color: #3b82f6;
+}
+
+.tabItem.active::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #3b82f6;
+    border-radius: 3px 3px 0 0;
+}
+
+.tabBadge {
+    background: #eef2ff;
+    color: #3b82f6;
+    padding: 0.1rem 0.4rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+}
+
+.tabContent {
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    min-height: 100px;
+}
+
+.tabContent.isEmpty {
+    border-style: dashed;
+    border-width: 2px;
+}
+
+
+.metadataGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.metaItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.2rem 1.5rem;
+}
+
+/* Internal lines */
+/* Vertical separator */
+.metaItem:nth-child(odd) {
+    border-right: 1px solid rgba(0, 0, 0, 0.10);
+}
+
+/* Horizontal separator */
+.metaItem:nth-child(-n+2) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+}
+
+.metaLabel {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.metaValue {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333333;
+}
+
+.tagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.tagItem {
+    color: #3b82f6; /* Matching the blue theme */
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}

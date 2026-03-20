@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 50vh;
+    width: 15vw;
     height: 50vh;
     padding: 1.25rem !important;
     background-color: #ffffff;
@@ -14,13 +14,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hidden {
-    transform: translateY(100vh);
-    opacity: 0;
-}
 
 
 
@@ -34,21 +29,21 @@
 }
 
 .day {
-    font-size: 11rem;
+    font-size: 9rem;
     font-weight: 800;
-    color: #333333;
-    line-height: 0.85;
+    color: #1a1a1a; /* Un tono más oscuro para más impacto */
+    line-height: 0.8;
     font-family: 'Space Grotesk', sans-serif;
-    letter-spacing: -4px;
+    letter-spacing: -6px;
 }
 
 .month {
-    font-size: 2.5rem;
+    font-size: 3.2rem;
     font-weight: 700;
     color: #3b82f6;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.25em;
     font-family: 'Space Grotesk', sans-serif;
-    margin-top: 0.1rem;
+    margin-top: 0.2rem;
 }
 
 

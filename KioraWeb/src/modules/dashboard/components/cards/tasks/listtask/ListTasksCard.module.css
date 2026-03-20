@@ -1,8 +1,8 @@
 .container {
     position: fixed;
     top: 0;
-    left: calc(50vh + 30vw);
-    width: calc(100vw - 50vh - 30vw);
+    left: 45vw;
+    width: 55vw;
     height: 100vh;
     background-color: #ffffff;
     padding: 2.5rem 2rem;
@@ -13,21 +13,56 @@
     flex-direction: column;
     z-index: 10;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    transition-delay: 0.4s; /* Wait for AddTaskCard to exit when returning */
 }
 
-.focused {
-    transform: translateX(100vw);
-    opacity: 0;
-    transition-delay: 0s !important; /* Start moving out immediately */
-}
 
-.mainTitle {
-    font-size: 2.25rem !important;
-    font-weight: 800 !important;
-    color: #1a1a1a;
+.categoryHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 2rem;
+    padding: 0.6rem 0.8rem;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    margin-right: 1.5rem; /* Alineado con el área de las tarjetas (antes del scroll) */
+}
+
+.categoryLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.addIcon {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.categoryTitle {
+    font-size: 1rem !important; /* Más pequeño para que coincida */
+    font-weight: 700 !important;
+    color: #4a4a4a;
+    margin: 0 !important;
+}
+
+.statusPill {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.5rem;
+    background-color: rgba(0, 0, 0, 0.04); /* Gris muy sutil */
+    border-radius: 4px;
+}
+
+.pillIcon {
+    color: rgba(0, 0, 0, 0.5); /* Gris neutro */
+}
+
+.pillCount {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.6); /* Gris neutro un poco más marcado */
 }
 
 .content {
@@ -35,13 +70,15 @@
     flex-direction: column;
     flex: 1;
     overflow: hidden;
+    position: relative; /* Base for detailed card positioning */
 }
 
 .tasksScroll {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr); /* Dos cards por fila */
+    gap: 1.25rem;
     padding-bottom: 2rem;
+    padding-right: 1.5rem; /* Espacio para el scroll */
     overflow-y: auto;
     flex: 1;
 }

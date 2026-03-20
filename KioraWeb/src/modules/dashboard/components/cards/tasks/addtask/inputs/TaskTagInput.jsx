@@ -29,6 +29,10 @@ const TaskTagInput = ({
                     value={tagSearch}
                     onChange={onTagChange}
                     onFocus={() => setShowSuggestions(true)}
+                    onBlur={() => {
+                        // Delay to allow onClick to fire on suggestion items
+                        setTimeout(() => setShowSuggestions(false), 200);
+                    }}
                     className={styles.input}
                 />
                 {showSuggestions && (isLoadingTags || filteredTags.length > 0) && (

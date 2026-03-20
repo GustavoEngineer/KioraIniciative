@@ -3,16 +3,29 @@ import styles from './AgendaCard.module.css';
 import { FiSun, FiCalendar, FiSquare, FiCheckSquare } from 'react-icons/fi';
 import { Typography } from '../../../../../common/components/typography/typography';
 import { taskService } from '../../../../dashboard/services/taskService';
+import '../../transitions/dashboard_AddTask.css';
+import '../../transitions/Dashboard_taskinfo.css';
 
-const AgendaCard = ({ isCalendarVisible, isFocused, onToggleCalendar }) => {
-    const today = new Date();
-    const [selectedDate, setSelectedDate] = useState(today);
+const AgendaCard = ({ isCalendarVisible, isFocused, isTaskFocused, onToggleCalendar, selectedDate, onDateChange, onTaskClick }) => {
+    // Helper to parse date string or object
+    const getSafeDate = (date) => {
+        if (!date) return new Date();
+        const d = new Date(date);
+        // Correct for timezone if it's a string YYYY-MM-DD
+        if (typeof date === 'string' && date.includes('-')) {
+            const [y, m, dayPart] = date.split('-').map(Number);
+            return new Date(y, m - 1, dayPart);
+        }
+        return d;
+    };
+
+    const currentSelectedDate = useMemo(() => getSafeDate(selectedDate), [selectedDate]);
     const [tasks, setTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Calculate current week days (Monday to Sunday)
+    // Calculate week days (Monday to Sunday) based on currentSelectedDate
     const weekDays = useMemo(() => {
-        const current = new Date(today);
+        const current = new Date(currentSelectedDate);
         const day = current.getDay();
         const diff = current.getDate() - day + (day === 0 ? -6 : 1); // Adjust to Monday
         const monday = new Date(current.setDate(diff));
@@ -27,7 +40,7 @@ const AgendaCard = ({ isCalendarVisible, isFocused, onToggleCalendar }) => {
                 id: date.getTime()
             };
         });
-    }, []);
+    }, [currentSelectedDate]);
 
     // Helper to check if two dates are the same day
     const isSameDay = (d1, d2) => {
@@ -40,10 +53,8 @@ const AgendaCard = ({ isCalendarVisible, isFocused, onToggleCalendar }) => {
     useEffect(() => {
         const fetchTasks = async () => {
             setIsLoading(true);
-            const year = selectedDate.getFullYear();
-            const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
-            const day = String(selectedDate.getDate()).padStart(2, '0');
-            const dateStr = `${year}-${month}-${day}`;
+            const dateStr = typeof selectedDate === 'string' ? selectedDate : 
+                `${currentSelectedDate.getFullYear()}-${String(currentSelectedDate.getMonth() + 1).padStart(2, '0')}-${String(currentSelectedDate.getDate()).padStart(2, '0')}`;
 
             const { data, error } = await taskService.getTasksByDate(dateStr);
             if (data && !error) {
@@ -55,21 +66,28 @@ const AgendaCard = ({ isCalendarVisible, isFocused, onToggleCalendar }) => {
         };
 
         fetchTasks();
-    }, [selectedDate]);
+    }, [selectedDate, currentSelectedDate]);
 
-    const formattedMonth = today.toLocaleDateString('en-US', { month: 'long' });
-    const formattedYear = today.getFullYear();
+    const formattedMonth = currentSelectedDate.toLocaleDateString('en-US', { month: 'long' });
+    const formattedYear = currentSelectedDate.getFullYear();
 
     const getTaskIcon = (task) => {
         if (task.status === 'Completada') return <FiCheckSquare className={styles.taskIconSuccess} />;
         return <FiSquare />;
     };
 
+    const handleDayClick = (date) => {
+        if (onDateChange) {
+            onDateChange(date);
+        }
+    };
+
     return (
         <div className={`
-            ${styles.container} 
+            ${styles.container} agenda-mini-container-transition
             ${isCalendarVisible ? styles.splitMode : ''} 
-            ${isFocused ? styles.focused : ''}
+            ${isFocused ? 'agenda-mini-focused-transition' : ''}
+            ${isTaskFocused ? 'agenda-taskfocused-transition' : ''}
         `}>
             <header className={styles.header}>
                 <div className={styles.headerTitleGroup}>
@@ -89,8 +107,8 @@ const AgendaCard = ({ isCalendarVisible, isFocused, onToggleCalendar }) => {
                 {weekDays.map((day) => (
                     <div 
                         key={day.id} 
-                        className={`${styles.dayItem} ${isSameDay(selectedDate, day.dateObj) ? styles.activeDay : ''}`}
-                        onClick={() => setSelectedDate(day.dateObj)}
+                        className={`${styles.dayItem} ${isSameDay(currentSelectedDate, day.dateObj) ? styles.activeDay : ''}`}
+                        onClick={() => handleDayClick(day.dateObj)}
                     >
                         <Typography variant="dashboard-title" className={styles.dayNum}>
                             {day.num}
@@ -109,7 +127,11 @@ const AgendaCard = ({ isCalendarVisible, isFocused, onToggleCalendar }) => {
                     </div>
                 ) : tasks.length > 0 ? (
                     tasks.map((task) => (
-                        <div key={task.id} className={`${styles.taskItem} ${task.status === 'Completada' ? styles.past : ''}`}>
+                        <div 
+                            key={task.id} 
+                            className={`${styles.taskItem} ${task.status === 'Completada' ? styles.past : ''}`}
+                            onClick={() => onTaskClick && onTaskClick(task)}
+                        >
                             <div className={styles.taskContent}>
                                 <span className={styles.taskIconWrapper}>
                                     {getTaskIcon(task)}

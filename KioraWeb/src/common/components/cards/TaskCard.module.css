@@ -21,20 +21,11 @@
     border-color: rgba(0, 0, 0, 0.1);
 }
 
-.priorityDateRow {
+.titleDateRow {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-}
-
-.priorityPill {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.4rem 0.8rem;
-    border-radius: 100px;
-    font-size: 0.8rem;
-    font-weight: 700;
+    align-items: flex-start;
+    gap: 1rem;
 }
 
 .dateInfo {
@@ -76,18 +67,91 @@
 .tagsRow {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    margin-bottom: 0.2rem;
+}
+
+.bodyContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+}
+
+.title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.55);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.footerRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.leftFooter {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.dateInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.subtasksInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.priorityPill {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
 }
 
 .tagPill {
-    padding: 0.4rem 0.8rem;
-    background: #ffffff;
-    border: 1.5px solid rgba(0, 0, 0, 0.06);
-    border-radius: 8px;
-    font-size: 0.85rem;
+    padding: 0.2rem 0.5rem;
+    background: #eff6ff; /* Azul de la marca claro (blue-50) */
+    border: 1px solid #3b82f6; /* Azul de la marca (blue-500) */
+    border-radius: 4px;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: rgba(0, 0, 0, 0.6);
+    color: #3b82f6; /* Azul de la marca (blue-500) */
 }
 
 .compact {

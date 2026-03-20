@@ -3,13 +3,25 @@ import { Typography } from '../../../../../../common/components/typography/typog
 import DashboardCard from '../../../../../../common/components/cards/DashboardCard';
 import styles from './ListTasksCard.module.css';
 import TaskCard from '../../../../../../common/components/cards/TaskCard';
+import { Icon } from '@iconify/react';
+import '../../../transitions/dashboard_AddTask.css';
+import '../../../transitions/Dashboard_taskinfo.css';
 
-const ListTasksCard = ({ onTaskClick, isFocused, tasks, isLoading, error }) => {
+const ListTasksCard = ({ onTaskClick, isFocused, isTaskFocused, tasks, isLoading, error }) => {
     return (
-        <div className={`${styles.container} ${isFocused ? styles.focused : ''}`}>
-            <Typography variant="dashboard-title" className={styles.mainTitle}>
-                Tareas
-            </Typography>
+        <div className={`${styles.container} listtasks-container-transition ${isFocused ? 'listtasks-focused-transition' : ''} ${isTaskFocused ? 'listtasks-taskfocused-transition' : ''}`}>
+            <div className={styles.categoryHeader}>
+                <div className={styles.categoryLeft}>
+                    <Icon icon="solar:add-bold" width={16} className={styles.addIcon} />
+                    <Typography variant="dashboard-title" className={styles.categoryTitle}>
+                        Por hacer
+                    </Typography>
+                </div>
+                <div className={styles.statusPill}>
+                    <Icon icon="solar:pen-new-square-bold" width={14} className={styles.pillIcon} />
+                    <span className={styles.pillCount}>{tasks.length}</span>
+                </div>
+            </div>
 
             <div className={styles.content}>
                 {error && (
@@ -36,7 +48,7 @@ const ListTasksCard = ({ onTaskClick, isFocused, tasks, isLoading, error }) => {
                         <TaskCard
                             key={task.id}
                             task={task}
-                            onClick={() => onTaskClick(task.id)}
+                            onClick={() => onTaskClick(task)}
                             variant={isFocused ? 'compact' : 'default'}
                         />
                     ))}

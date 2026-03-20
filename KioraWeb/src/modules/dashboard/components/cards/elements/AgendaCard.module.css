@@ -1,6 +1,6 @@
 .container {
     position: fixed;
-    left: 50vh;
+    left: 15vw;
     top: 0;
     width: 30vw;
     height: 100vh;
@@ -13,19 +13,15 @@
     flex-direction: column;
     border-left: 1px solid #e0e0e0;
     border-right: 1px solid #e0e0e0;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 10;
+    z-index: 1200; /* Siempre en el tope del panel lateral */
 }
 
-.focused {
-    left: 0 !important;
-    transition-delay: 0.3s;
-}
+
 
 .splitMode {
     height: 50vh;
-    top: 50vh;
-    border-top: 1px solid #e0e0e0;
+    top: 0; /* Movido arriba */
+    border-bottom: 1px solid #e0e0e0; /* Borde inferior para separar del calendario */
 }
 
 .header {
@@ -62,7 +58,6 @@
     font-size: 1.5rem;
     color: #8e8e93;
     cursor: pointer;
-    transition: all 0.3s ease;
 }
 
 .calendarToggleIcon:hover, .activeIcon {
@@ -88,7 +83,6 @@
     padding: 0.5rem 0.25rem;
     flex: 1;
     cursor: pointer;
-    transition: all 0.2s ease;
     text-align: center;
 }
 
@@ -125,6 +119,11 @@
     align-items: center;
     padding: 1.25rem 0;
     border-bottom: 1px dashed #efeff4;
+    cursor: pointer;
+}
+
+.taskItem:hover {
+    opacity: 0.7;
 }
 
 .taskContent {

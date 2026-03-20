@@ -43,7 +43,10 @@ const TaskCard = ({ task, onClick, variant }) => {
         : task.tag_id ? [{ id: task.tag_id }] : [];
 
     const priority = getPriorityInfo(task.priority || 5);
-    
+    const subtasks = task.subtasks || [];
+    const hasSubtasks = subtasks.length > 0;
+    const completedSubtasks = subtasks.filter(s => s.completed).length;
+
     // Formatear fecha: 12 Jan 2024
     const formatDate = (dateStr) => {
         if (!dateStr) return 'Sin fecha';
@@ -58,18 +61,13 @@ const TaskCard = ({ task, onClick, variant }) => {
 
     return (
         <div className={`${styles.taskCard} ${isCompact ? styles.compact : ''}`} onClick={onClick}>
-            <div className={styles.priorityDateRow}>
-                <div className={styles.priorityPill} style={{ backgroundColor: `${priority.color}15`, color: priority.color }}>
-                    <Icon icon={priority.icon} width={14} />
-                    <span>{priority.label}</span>
+            {tags.length > 0 && (
+                <div className={styles.tagsRow}>
+                    {tags.map((tag, idx) => (
+                        <TagPill key={idx} tag={tag} hideIcon />
+                    ))}
                 </div>
-                {!isCompact && (
-                    <div className={styles.dateInfo}>
-                        <Icon icon="solar:calendar-minimalistic-bold" width={16} />
-                        <span>{formatDate(task.due_date)}</span>
-                    </div>
-                )}
-            </div>
+            )}
 
             <div className={styles.bodyContent}>
                 <h4 className={styles.title}>{task.title}</h4>
@@ -78,13 +76,25 @@ const TaskCard = ({ task, onClick, variant }) => {
                 )}
             </div>
 
-            {!isCompact && tags.length > 0 && (
-                <div className={styles.tagsRow}>
-                    {tags.map((tag, idx) => (
-                        <TagPill key={idx} tag={tag} hideIcon />
-                    ))}
+            <div className={styles.footerRow}>
+                <div className={styles.leftFooter}>
+                    <div className={styles.dateInfo}>
+                        <Icon icon="solar:calendar-minimalistic-bold" width={14} />
+                        <span>{formatDate(task.due_date)}</span>
+                    </div>
+                    {hasSubtasks && (
+                        <div className={styles.subtasksInfo}>
+                            <Icon icon="solar:checklist-minimalistic-bold" width={14} />
+                            <span>{completedSubtasks}/{subtasks.length}</span>
+                        </div>
+                    )}
                 </div>
-            )}
+                
+                <div className={styles.priorityPill} style={{ backgroundColor: `${priority.color}15`, color: priority.color }}>
+                    <Icon icon={priority.icon} width={12} />
+                    <span>{priority.label}</span>
+                </div>
+            </div>
         </div>
     );
 };

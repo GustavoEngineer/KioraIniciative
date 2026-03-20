@@ -1,0 +1,148 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 45vw;
+    width: 20vw;
+    height: 100vh;
+    background: #ffffff;
+    border-left: none !important;
+    border-right: none; /* Dejamos que sideBorders lo maneje únicamente */
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.5rem;
+    box-sizing: border-box;
+    z-index: 1050; /* Between AgendaCard and TaskGeneralInfoCard */
+    animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-20%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.title {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: #8e8e93;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: #e5e5ea;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.closeButton:hover {
+    color: #ff3b30;
+}
+
+.timerDisplay {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+
+.timeText {
+    font-size: 2.5rem !important;
+    font-weight: 800 !important;
+    font-variant-numeric: tabular-nums;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+}
+
+.taskLabel {
+    font-size: 1rem !important;
+    color: #8e8e93;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.playButton {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: none;
+    background: #3b82f6;
+    color: white;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.playButton:hover {
+    transform: scale(1.05);
+    background: #2563eb;
+}
+
+.playButton.active {
+    background: #8b5cf6;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.resetButton {
+    background: #f2f2f7;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    color: #8e8e93;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.resetButton:hover {
+    background: #e5e5ea;
+    color: #1a1a1a;
+}
+
+.footer {
+    text-align: center;
+}
+
+.status {
+    color: #3b82f6;
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}

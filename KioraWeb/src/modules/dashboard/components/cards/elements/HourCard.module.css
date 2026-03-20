@@ -2,7 +2,7 @@
     position: fixed;
     top: 50vh;
     left: 0;
-    width: 50vh;
+    width: 15vw;
     height: 50vh;
     padding: 1.25rem !important;
     background-color: #ffffff;
@@ -13,27 +13,27 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    transition-delay: 0.1s;
 }
 
-.hidden {
-    transform: translateY(100vh);
-    opacity: 0;
-}
+
 
 .timeSection {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 2;
 }
 
-.time {
-    font-size: 8rem;
-    font-weight: 700;
-    color: #444444;
+.hours, .minutes {
+    font-size: 7.5rem;
+    font-weight: 800;
+    color: #1a1a1a;
     font-family: 'Space Grotesk', sans-serif;
-    letter-spacing: -4px;
-    line-height: 1;
+    letter-spacing: -6px;
+    line-height: 0.85;
+}
+
+.minutes {
+    color: #c7c7cc; /* Gris para diferenciar los minutos de la hora */
 }
